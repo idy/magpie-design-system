@@ -27,16 +27,16 @@ app's static assets and serve them from your own origin. Include `fonts/`
 beside `css/` so the registered font URLs resolve:
 
 ```sh
-git clone --depth 1 --branch v0.4.2 https://github.com/idy/magpie-design-system.git /tmp/mds
+git clone --depth 1 --branch v0.4.3 https://github.com/idy/magpie-design-system.git /tmp/mds
 cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 ```
 
 **Or load from a CDN** on public pages:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.2/css/magpie.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.3/css/magpie.css">
 <script type="module">
-  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.2/js/magpie.js';
+  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.3/js/magpie.js';
 </script>
 ```
 
@@ -44,7 +44,7 @@ cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 `./css` to the stylesheet):
 
 ```sh
-npm install github:idy/magpie-design-system#v0.4.2
+npm install github:idy/magpie-design-system#v0.4.3
 ```
 
 `css/magpie.css` imports everything. To pick layers, link them in this order:
@@ -272,7 +272,8 @@ It uses the Popover API to escape clipped settings groups; older WebViews
 use a fixed portal that copies the control's theme tokens.
 
 - Click, Enter or Space opens the menu; arrows, Home and End browse options.
-- Enter, Space or Tab commits; Escape or clicking outside cancels.
+- Enter or Space commits; Tab, Escape or clicking outside dismisses without changing the selection. Tab retains normal focus navigation.
+- Scrolling inside the menu or an unrelated pane keeps it open; scrolling that moves the trigger dismisses it.
 - Typing searches labels; repeating a letter cycles matching options.
 
 The returned controller exposes `trigger`, `open()`, `close()`, `refresh()`
