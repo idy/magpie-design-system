@@ -1,16 +1,20 @@
 import { initSelect } from '../js/magpie.js';
 
 const fixture = document.querySelector('#fixture');
+const caretSource = await fetch('../icons/caret-down.svg').then(response => response.text());
+const spriteSource = await fetch('../icons/icons.svg').then(response => response.text());
+const sprite = document.importNode(new DOMParser().parseFromString(spriteSource, 'image/svg+xml').documentElement, true);
+sprite.style.display = 'none'; sprite.setAttribute('aria-hidden', 'true'); document.body.prepend(sprite);
 const results = [];
 const assert = (condition, message) => { if (!condition) throw new Error(message); };
 function test(name, run) {
   try { run(); results.push({ name, passed: true }); }
   catch (error) { results.push({ name, passed: false, error: error.message }); }
 }
-const icon = name => `<svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#${name}"/></svg>`;
+const icon = name => `<svg class="mds-icon" aria-hidden="true"><use href="#${name}"/></svg>`;
 const pill = (classes = 'mds-pill--responsive') => `<button type="button" class="mds-pill ${classes}" aria-label="Check for app updates">${icon('up')}<span class="mds-pill-label" aria-live="polite">Check for updates</span></button>`;
 function mount() {
-  fixture.innerHTML = `<div class="mds-titlebar-actions"><button type="button" class="mds-switch" role="switch" aria-checked="false" aria-label="Connect"><span class="mds-switch-track" aria-hidden="true"></span></button>${pill()}<button type="button" class="mds-icon-button mds-icon-button--compact" aria-label="Refresh">${icon('reload')}</button></div>`;
+  fixture.innerHTML = `<div class="mds-titlebar-actions mds-titlebar-actions--balanced"><button type="button" class="mds-switch" role="switch" aria-checked="false" aria-label="Connect"><span class="mds-switch-track" aria-hidden="true"></span></button>${pill()}<button type="button" class="mds-icon-button mds-icon-button--compact" aria-label="Refresh">${icon('reload')}</button></div>`;
   return { toggle: fixture.querySelector('.mds-switch'), update: fixture.querySelector('.mds-pill'), refresh: fixture.querySelector('.mds-icon-button') };
 }
 function contrast(a, b) {
@@ -106,7 +110,58 @@ test('Compact action faces match the switch track without shrinking click target
 test('Neighboring toolbar targets stay separate', () => {
   const { toggle, update, refresh } = mount();
   const t = toggle.getBoundingClientRect(), u = update.getBoundingClientRect(), r = refresh.getBoundingClientRect();
-  assert(u.left - t.right >= 8 && r.left - u.right >= 8, 'Neighboring target gaps collapsed');
+  assert(u.left - t.right >= -0.5 && r.left - u.right >= -0.5, 'Expanded click targets overlap');
+});
+
+function faceBounds(button) {
+  const rect = button.getBoundingClientRect(), width = parseFloat(getComputedStyle(button, '::before').width);
+  return { left: rect.left + (rect.width - width) / 2, right: rect.right - (rect.width - width) / 2 };
+}
+
+function assertEqualGaps(anchors, message) {
+  const gaps = anchors.slice(1).map((anchor, index) => anchor.left - anchors[index].right);
+  assert(gaps.every(gap => Math.abs(gap - 24) < 1), `${message}: visual gaps ${gaps.join(', ')}`);
+}
+
+test('Balanced action rows give switch, update face and refresh ink equal visible gaps', () => {
+  const { toggle, update, refresh } = mount();
+  const track = toggle.querySelector('.mds-switch-track').getBoundingClientRect();
+  const ink = refresh.querySelector('use').getBoundingClientRect();
+  assert(ink.width > 0, 'Refresh glyph did not load');
+  assertEqualGaps([track, faceBounds(update), ink], 'Compact toolbar');
+  update.hidden = true;
+  assertEqualGaps([toggle.querySelector('.mds-switch-track').getBoundingClientRect(), refresh.querySelector('use').getBoundingClientRect()], 'Hidden update');
+});
+
+test('Every visible interval stays equal across status, mode and update states', () => {
+  fixture.innerHTML = `<div class="mds-titlebar-actions mds-titlebar-actions--balanced"><span class="mds-status"><i class="mds-dot"></i><span>Preview</span></span><span class="mds-action-slot--select"><label class="mds-visually-hidden" for="mode-spacing">Mode</label><select id="mode-spacing" class="mds-select mds-select--text"><option>Rule-based</option><option>Global (Kill-Switch)</option><option>全局（Kill-Switch）</option></select></span><span class="mds-action-slot--switch"><button class="mds-switch" type="button" role="switch" aria-checked="false" aria-label="Connect"><span class="mds-switch-track"></span></button></span>${pill()}<button class="mds-icon-button mds-icon-button--compact" aria-label="Refresh">${icon('reload')}</button></div>`;
+  const row = fixture.firstElementChild, source = row.querySelector('select'), control = initSelect(source);
+  const update = row.querySelector('.mds-pill'), refresh = row.querySelector('.mds-icon-button');
+  const status = row.querySelector('.mds-status');
+  if (matchMedia('(max-width:860px)').matches) status.querySelector('span').className = 'mds-visually-hidden';
+  const probe = new DOMParser().parseFromString(caretSource, 'image/svg+xml').documentElement;
+  const node = document.importNode(probe, true); node.setAttribute('width', '14'); node.setAttribute('height', '14');
+  node.style.cssText = 'position:fixed;left:0;top:0;opacity:0;pointer-events:none'; fixture.append(node);
+  const caretInset = node.getBoundingClientRect().right - node.querySelector('path').getBoundingClientRect().right;
+  try {
+    for (let selected = 0; selected < source.options.length; selected++) {
+      source.selectedIndex = selected; control.refresh();
+      for (const state of ['idle', 'busy', 'error', 'hidden']) {
+        update.hidden = state === 'hidden'; update.setAttribute('aria-busy', String(state === 'busy')); update.dataset.tone = state === 'error' ? 'error' : 'accent';
+        update.querySelector('.mds-pill-label').textContent = state === 'busy' ? 'Downloading 100%' : state === 'error' ? 'Retry update' : 'Check for updates';
+        const trigger = control.trigger, rect = trigger.getBoundingClientRect(), style = getComputedStyle(trigger);
+        const text = document.createRange(); text.selectNodeContents(trigger);
+        const placement = Number(style.backgroundPositionX.match(/-\s*([\d.]+)px/)?.[1] ?? 9);
+        const mode = { left: text.getBoundingClientRect().left, right: rect.right - parseFloat(style.borderRightWidth) - placement - caretInset };
+        const anchors = [status.getBoundingClientRect(), mode, row.querySelector('.mds-switch-track').getBoundingClientRect()];
+        if (!update.hidden) anchors.push(faceBounds(update));
+        anchors.push(refresh.querySelector('use').getBoundingClientRect());
+        assertEqualGaps(anchors, `${source.value}/${state}`);
+        const targets = [...row.querySelectorAll('button')].filter(button => button.getClientRects().length).map(button => button.getBoundingClientRect()).sort((a, b) => a.left - b.left);
+        for (let index = 1; index < targets.length; index++) assert(targets[index].left >= targets[index - 1].right - 0.5, 'Expanded targets overlap');
+      }
+    }
+  } finally { control.destroy(); }
 });
 
 test('Coarse-pointer toolbar controls provide at least 44px targets', () => {

@@ -152,7 +152,7 @@ All tokens are custom properties on `:root`, prefixed `--mds-`.
 | Overlays | `hover`, `selected`, `wash`, `subtle-hover`, `icon-hover`, `button-hover`, `field-hover` | Translucent hover and selection layers that work on any surface |
 | Details | `inline-code`, `scroll-thumb`, `scroll-thumb-hover`, `spinner-line`, `switch-off`, `switch-knob`, `code-key`, `code-value`, `actionbar`, `toast-shadow`, `dialog-shadow` | Component specifics |
 | Type | `font` (Lato), `font-display` and `font-action` (Montserrat), `font-heading` (Monda), `mono`, `text-title` (1.25rem), `text-heading` (1rem), `text-body` (0.875rem), `text-note` (0.8125rem), `text-caption` (0.75rem), `text-code` (0.8125rem) | Semantic font families and the compact type scale |
-| Layout | `gutter`, `gap`, `section-gap`, `control-height`, `compact-control-height`, `titlebar-height`, `sidebar-width` | Shell geometry; compact action faces and switch tracks share a 20px height; `gutter` and `sidebar-width` shrink on narrow windows |
+| Layout | `gutter`, `gap`, `section-gap`, `control-height`, `compact-control-height`, `titlebar-height`, `titlebar-visual-gap`, `sidebar-width` | Shell geometry; compact action faces and switch tracks share a 20px height; `gutter` and `sidebar-width` shrink on narrow windows |
 | Radius | `radius-xs` (4px), `radius-sm` (8px), `radius-md` (10px), `radius-lg` (12px), `radius-xl` (14px), `radius-pill` | Inline code, controls, segmented tabs and notices, groups and cards, dialogs, pills and switches |
 | Motion | `duration-fast` (120ms), `duration` (150ms), `ease` | Control transitions and the toast entrance |
 
@@ -191,7 +191,7 @@ switch anatomy. The application owns `aria-checked`, disabled and pending
 state; the stylesheet does not optimistically toggle an async operation.
 
 ```html
-<div class="mds-titlebar-actions">
+<div class="mds-titlebar-actions mds-titlebar-actions--balanced">
   <button class="mds-switch" type="button" role="switch" aria-checked="false" aria-label="Connect">
     <span class="mds-switch-track" aria-hidden="true"></span>
   </button>
@@ -218,9 +218,17 @@ updates. Keep an explicit `aria-label` or `aria-labelledby` on the button.
 Busy/error labels do not stretch compact targets. Use `aria-busy` for busy
 motion and `data-tone="error"` for failure; choose a spinner glyph for progress.
 Keep an update-specific glyph such as `up` for update actions and reserve
-`reload` for refresh, so compact actions remain distinguishable. The shared
-action-row gap separates whole click targets; do not compensate it with
-negative margins.
+`reload` for refresh, so compact actions remain distinguishable.
+
+Add `mds-titlebar-actions--balanced` to a shared action row to give visible
+content equal 24px intervals through `--mds-titlebar-visual-gap`. The preset
+accounts for text-select padding/caret geometry, switch tracks, compact pill
+faces and the Phosphor reload glyph. Use `mds-action-slot--select` or
+`mds-action-slot--switch` when an app wrapper surrounds those controls. Direct
+shared controls are recognized automatically. The shared optical insets keep
+the expanded click targets non-overlapping, reserve room at the window edge,
+and preserve spacing when updates are hidden or change state. Do not add
+product-specific spacing compensation on top of the preset.
 
 Both checkbox and button switches use `--mds-switch-knob` for the thumb in
 light and dark, with matching checked, focus and disabled treatment. The
