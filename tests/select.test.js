@@ -51,13 +51,61 @@ await test('Arrow keys skip disabled options and Escape cancels without changing
   assert(!trigger.hasAttribute('aria-activedescendant'), 'Closed trigger references a hidden option');
 });
 
-await test('Home, End, Enter and Tab commit the intended selection', () => {
+await test('Home and End browse, Enter commits, and Tab dismisses without committing', () => {
   const { select, trigger } = mount();
   key(trigger, 'End'); key(trigger, 'Enter');
   assert(select.value === 'c', 'End/Enter failed');
-  key(trigger, 'Home'); key(trigger, 'Tab');
-  assert(select.value === 'a', 'Home/Tab failed');
+  key(trigger, 'Home');
+  assert(key(trigger, 'Tab'), 'Tab must keep its native focus-navigation default');
+  assert(select.value === 'c', 'Tab committed a pending option');
   assert(trigger.getAttribute('aria-expanded') === 'false', 'Tab left the menu open');
+});
+
+await test('Tab never fills an unset selection or emits native change events', () => {
+  const { select, trigger, api } = mount('<option value="" disabled>Not set</option><option value="exit">Available exit</option>');
+  select.selectedIndex = -1;
+  api.refresh();
+  let input = 0, change = 0;
+  select.addEventListener('input', () => input++);
+  select.addEventListener('change', () => change++);
+  trigger.click();
+  assert(trigger.hasAttribute('aria-activedescendant'), 'Opening did not browse an available option');
+  key(trigger, 'Tab');
+  assert(select.selectedIndex === -1 && select.value === '', 'Tab silently selected the available exit');
+  assert(input === 0 && change === 0, 'Tab emitted a configuration-changing event');
+  assert(trigger.getAttribute('aria-expanded') === 'false', 'Tab did not dismiss the menu');
+});
+
+await test('Unrelated pane scrolling and menu scrolling preserve an open dropdown', async () => {
+  const { trigger, menu } = mount(Array.from({ length: 30 }, (_, index) => `<option value="${index}">Option ${index}</option>`).join(''));
+  const pane = document.createElement('div');
+  pane.style.cssText = 'height:40px;overflow:auto';
+  pane.innerHTML = '<div style="height:200px">Unrelated log output</div>';
+  fixture.append(pane);
+  trigger.click();
+  pane.scrollTop = 20;
+  pane.dispatchEvent(new Event('scroll'));
+  await tick();
+  assert(trigger.getAttribute('aria-expanded') === 'true', 'Unrelated log/sidebar scrolling closed the menu');
+  menu.scrollTop = 40;
+  menu.dispatchEvent(new Event('scroll'));
+  await tick();
+  assert(trigger.getAttribute('aria-expanded') === 'true', 'Scrolling options closed their own menu');
+});
+
+await test('Scrolling that moves the trigger dismisses its detached dropdown', async () => {
+  const { trigger, api, form } = mount();
+  const pane = document.createElement('div');
+  pane.style.cssText = 'height:140px;overflow:auto';
+  form.style.paddingBlock = '60px 240px';
+  form.before(pane); pane.append(form);
+  api.open();
+  const top = trigger.getBoundingClientRect().top;
+  pane.scrollTop = 20;
+  assert(trigger.getBoundingClientRect().top !== top, 'Fixture did not move the trigger');
+  pane.dispatchEvent(new Event('scroll'));
+  await tick();
+  assert(trigger.getAttribute('aria-expanded') === 'false', 'Menu remained detached from its moved trigger');
 });
 
 await test('Typeahead cycles matching labels and preserves multi-character prefixes', () => {
