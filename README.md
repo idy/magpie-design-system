@@ -170,19 +170,56 @@ component has tones.
 | Dropdown | `<select class="mds-select">`; `.mds-select--inline` for a bounded toolbar field; `.mds-select--text` for an unboxed value | `initSelect()` replaces the platform picker with a themed listbox, preserving form data and events |
 | Input with unit | `<div class="mds-input-unit"><input class="mds-input"><span>bytes</span></div>` | |
 | Checkbox | `<label class="mds-check"><input type="checkbox">Label</label>` | |
-| Switch | `<label class="mds-switch"><input type="checkbox" role="switch"><span class="mds-switch-track"></span></label>` | Label it with `<label for>` or `aria-label` |
+| Switch | `.mds-switch` containing `.mds-switch-track`; use a labelled checkbox or a controlled `<button role="switch" aria-checked="false">` | Both forms share the same track, knob, focus and disabled states; the app owns a button's checked state |
 | Segmented tabs | `<div class="mds-tabs" role="tablist">` with `role="tab"` buttons; `.mds-tabs--fill` | Use with `initTabs()` |
 | Section heading | `<div class="mds-section-heading"><h2>…</h2><p>…</p></div>` | |
 | Settings group | `.mds-group` > `.mds-row` > `.mds-row-label` + `.mds-row-control`; `.mds-row--toggle`, `--preference`, `--stacked`, `.mds-hint`, `.mds-optional`, `.mds-note` | Form rows stack below 560px; preference rows keep a compact control column until 400px; stacked rows are always full-width |
 | Card | `.mds-card` with `.mds-card-title`, `.mds-card-hint`, `.mds-card-footer` | A single surface; do not nest cards |
 | Notice | `<div class="mds-notice" role="alert"><div><strong>…</strong><p>…</p></div>[button]</div>` | Defaults to warn; `data-tone="error"` or `"accent"` |
 | Status | `<span class="mds-status" data-tone="good"><i class="mds-dot"></i><span>…</span></span>`; `.mds-status--note` | A `data-tone` on the dot overrides the line's tone |
-| Pill | `<button class="mds-pill">` | One pending action, e.g. an update; `aria-busy="true"` spins its icon |
+| Pill | `<button class="mds-pill">`; `mds-pill--icon` for an icon action, `mds-pill--responsive` for text that compacts below 640px | Use `.mds-pill-label` and an accessible name; `aria-busy="true"` spins its icon; icon variants keep square 32px or 44px touch targets |
 | Spinner, loading | `.mds-spinner`, `.mds-loading` | |
 | Toast | `.mds-toast` | Created by `toast()` |
 | Dialog | `<dialog class="mds-dialog">` with `<form method="dialog">` and `.mds-dialog-actions`; `.mds-dialog--wide` | Use with `openDialog()` |
 | Code | `.mds-code` > `.mds-code-header`, `.mds-code-meta`, `.mds-code-body` of `.mds-code-line`s, `.mds-code-footer`; `.mds-pre` for logs | Lines are numbered with CSS counters; colour with `.mds-code-key`, `-value`, `-comment` |
 | Utilities | `.mds-icon`, `.mds-mono`, `.mds-tabular`, `.mds-visually-hidden` | |
+
+### Toolbar actions
+
+A connection action can keep native button behavior while using the shared
+switch anatomy. The application owns `aria-checked`, disabled and pending
+state; the stylesheet does not optimistically toggle an async operation.
+
+```html
+<div class="mds-titlebar-actions">
+  <button class="mds-switch" type="button" role="switch" aria-checked="false" aria-label="Connect">
+    <span class="mds-switch-track" aria-hidden="true"></span>
+  </button>
+  <button class="mds-pill mds-pill--responsive" type="button" aria-label="Check for app updates">
+    <svg class="mds-icon" aria-hidden="true"><use href="./mds/icons/icons.svg#up"/></svg>
+    <span class="mds-pill-label" aria-live="polite">Check for updates</span>
+  </button>
+  <button class="mds-icon-button" type="button" aria-label="Refresh">
+    <svg class="mds-icon" aria-hidden="true"><use href="./mds/icons/icons.svg#reload"/></svg>
+  </button>
+</div>
+```
+
+Use `mds-pill--icon` for a permanently compact action, or `mds-pill--responsive`
+to keep the label on desktop and compact below 640px. Both use a square 32px
+target and 16px icon; coarse pointers receive a 44px square. The
+`mds-pill-label` stays accessible when visually hidden, including live status
+updates. Keep an explicit `aria-label` or `aria-labelledby` on the button.
+Busy/error labels do not stretch compact targets. Use `aria-busy` for busy
+motion and `data-tone="error"` for failure; choose a spinner glyph for progress.
+Keep an update-specific glyph such as `up` for update actions and reserve
+`reload` for refresh, so compact actions remain distinguishable. The shared
+action-row gap separates whole click targets; do not compensate it with
+negative margins.
+
+Both checkbox and button switches use `--mds-switch-knob` for the thumb in
+light and dark, with matching checked, focus and disabled treatment. The
+34×20px track stays centered inside a 44px touch target.
 
 ### Custom dropdown
 
@@ -392,6 +429,12 @@ separately from the Node consistency checks in `npm test`.
 Open <http://127.0.0.1:4173/tests/nav.html> for the nested navigation suite,
 which checks parent disclosure, active paths, selection vetoes and disabled
 or foreign items.
+
+Open <http://127.0.0.1:4173/tests/toolbar.html> at desktop and narrow widths
+for toolbar regression checks: button/checkbox switch parity and thumb
+contrast, square icon pills, 44px touch targets, stable busy/error geometry,
+and separated click targets. The page also exposes an invalid text dropdown
+for checking that its red border remains visible while hovered.
 
 Keep the two dark-theme blocks in `css/tokens.css` identical; `npm test`
 fails otherwise. Bump `version` in `package.json` together with the pinned
