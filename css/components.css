@@ -90,6 +90,13 @@
 }
 .mds-select-trigger:focus:not(:focus-visible) { outline: none; }
 .mds-select-trigger[aria-expanded="true"] { border-color: var(--mds-accent-ink); }
+/* Unboxed values in titlebars, toolbars and metadata rows. Keep the normal
+   caret, invalid state and keyboard focus ring in both native/enhanced modes. */
+.mds-select-control--text { display: inline-flex; width: auto; min-width: 0; max-width: 100%; }
+.mds-select.mds-select--text { width: auto; min-width: 0; max-width: 100%; padding-inline-start: 2px; border-color: transparent; background-color: transparent; color: var(--mds-ink-secondary); font-size: var(--mds-text-note); }
+.mds-select--text:not([aria-invalid="true"]):is(:hover, :focus, [aria-expanded="true"]) { border-color: transparent; }
+.mds-select--text:hover:not(:disabled) { text-decoration: underline; text-underline-offset: 3px; }
+.mds-select--text[aria-invalid="true"] { border-color: var(--mds-error); }
 .mds-select-menu {
   position: fixed; inset: auto; z-index: 20; margin: 0; padding: 4px;
   box-sizing: border-box; max-height: 280px; overflow-y: auto; overscroll-behavior: contain;
@@ -180,6 +187,18 @@
   .mds-row-label { padding-top: 0; }
   .mds-row--toggle { grid-template-columns: minmax(0, 1fr) auto; }
 }
+
+/* Preferences give descriptions the flexible column and keep short controls
+   aligned at the right. Long editors can opt into a full-width row. */
+.mds-row--preference { grid-template-columns: minmax(0, 1fr) minmax(160px, 220px); align-items: center; min-height: 64px; }
+.mds-row--preference .mds-row-label { padding-top: 0; }
+.mds-row--preference .mds-row-label p { margin-top: 2px; }
+@container mds-group (max-width: 400px) {
+  .mds-row--preference { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .mds-row--preference.mds-row--toggle { grid-template-columns: minmax(0, 1fr) auto; }
+}
+.mds-row.mds-row--stacked { grid-template-columns: minmax(0, 1fr); gap: 8px; align-items: start; }
+.mds-row--stacked .mds-row-label { padding-top: 0; }
 
 .mds-card { min-width: 0; padding: 16px; border: 1px solid var(--mds-line); border-radius: var(--mds-radius-lg); background: var(--mds-surface); }
 .mds-card-title { display: block; font-family: var(--mds-font-heading); font-size: var(--mds-text-body); font-weight: 400; }

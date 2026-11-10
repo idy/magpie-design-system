@@ -167,13 +167,13 @@ component has tones.
 | Link button | `<button class="mds-link-button">` | Secondary actions in cards and footers |
 | Icon button | `<button class="mds-icon-button" aria-label="…">` | Always give it an accessible name |
 | Input and textarea | `.mds-input`, `.mds-textarea` | `aria-invalid="true"` marks an error; add `.mds-mono` for addresses and code |
-| Dropdown | `<select class="mds-select">`; `.mds-select--inline` for toolbars | `initSelect()` replaces the platform picker with a themed listbox, preserving form data and events |
+| Dropdown | `<select class="mds-select">`; `.mds-select--inline` for a bounded toolbar field; `.mds-select--text` for an unboxed value | `initSelect()` replaces the platform picker with a themed listbox, preserving form data and events |
 | Input with unit | `<div class="mds-input-unit"><input class="mds-input"><span>bytes</span></div>` | |
 | Checkbox | `<label class="mds-check"><input type="checkbox">Label</label>` | |
 | Switch | `<label class="mds-switch"><input type="checkbox" role="switch"><span class="mds-switch-track"></span></label>` | Label it with `<label for>` or `aria-label` |
 | Segmented tabs | `<div class="mds-tabs" role="tablist">` with `role="tab"` buttons; `.mds-tabs--fill` | Use with `initTabs()` |
 | Section heading | `<div class="mds-section-heading"><h2>…</h2><p>…</p></div>` | |
-| Settings group | `.mds-group` > `.mds-row` > `.mds-row-label` + `.mds-row-control`; `.mds-row--toggle`, `.mds-hint`, `.mds-optional`, `.mds-note` | Rows stack when the group is narrower than 560px (container query) |
+| Settings group | `.mds-group` > `.mds-row` > `.mds-row-label` + `.mds-row-control`; `.mds-row--toggle`, `--preference`, `--stacked`, `.mds-hint`, `.mds-optional`, `.mds-note` | Form rows stack below 560px; preference rows keep a compact control column until 400px; stacked rows are always full-width |
 | Card | `.mds-card` with `.mds-card-title`, `.mds-card-hint`, `.mds-card-footer` | A single surface; do not nest cards |
 | Notice | `<div class="mds-notice" role="alert"><div><strong>…</strong><p>…</p></div>[button]</div>` | Defaults to warn; `data-tone="error"` or `"accent"` |
 | Status | `<span class="mds-status" data-tone="good"><i class="mds-dot"></i><span>…</span></span>`; `.mds-status--note` | A `data-tone` on the dot overrides the line's tone |
@@ -229,6 +229,53 @@ automatically. `destroy()` removes generated markup and listeners and
 restores the original select. Calling `initSelect()` twice on one element
 returns the same controller. Multiple-selection and list-style selects
 (`multiple` or `size > 1`) are intentionally left to other controls.
+
+Use `.mds-select--text` when the current value belongs in a titlebar,
+toolbar or metadata row rather than a boxed form field:
+
+```html
+<label for="log-level">Log level</label>
+<select class="mds-select mds-select--text" id="log-level">
+  <option>Info</option><option>Debug</option><option>Warning</option>
+</select>
+```
+
+The variant keeps the caret, keyboard focus, invalid/disabled feedback and
+all dropdown behavior. It sizes to the value within its parent and truncates
+long values. It also works as a native select before enhancement. Adding or
+removing presentation classes is observed; `refresh()` also synchronizes the
+trigger and wrapper classes. No additional JavaScript API is needed.
+
+### Preference rows
+
+The default `.mds-row` gives a short label a bounded column and the form
+control the remaining width. Add `.mds-row--preference` when explanatory copy
+should take the flexible column and a short input, dropdown or switch should
+align at the right:
+
+```html
+<div class="mds-group">
+  <div class="mds-row mds-row--preference">
+    <div class="mds-row-label"><label for="language">Language</label><p>Applies immediately.</p></div>
+    <div class="mds-row-control"><select class="mds-select" id="language"><option>Follow system</option><option>English</option></select></div>
+  </div>
+  <div class="mds-row mds-row--preference mds-row--toggle">
+    <div class="mds-row-label"><label for="auto-connect">Connect on launch</label></div>
+    <div class="mds-row-control"><label class="mds-switch"><input type="checkbox" id="auto-connect" role="switch"><span class="mds-switch-track"></span></label></div>
+  </div>
+  <div class="mds-row mds-row--preference mds-row--stacked">
+    <div class="mds-row-label"><label for="domains">Domains</label></div>
+    <div class="mds-row-control"><textarea class="mds-textarea" id="domains"></textarea></div>
+  </div>
+</div>
+```
+
+Preference rows are at least 64px tall and their control column is 160–220px.
+Below a 400px group width they stack, while toggle rows keep their switch
+beside the label. `.mds-row--stacked` puts the control below its label at every
+width, including ordinary form rows; use it for multiline editors. Row height
+grows with translated or long descriptions. Existing default form rows and
+their 560px breakpoint are unchanged.
 
 ### App shell
 
@@ -337,7 +384,9 @@ With the demo server running, open
 browser regression suite. It covers pointer and keyboard selection, disabled
 items and groups, typeahead, form data, reset, required validation, dynamic
 options, clipped groups, viewport placement, labels, teardown, disabled
-fieldsets and the fallback portal's nested theme. These browser checks run
+fieldsets and the fallback portal's nested theme. It also verifies text-dropdown
+presentation and variants, truncation, preference-row alignment and stacking,
+and unchanged default form-row behavior. These browser checks run
 separately from the Node consistency checks in `npm test`.
 
 Open <http://127.0.0.1:4173/tests/nav.html> for the nested navigation suite,
