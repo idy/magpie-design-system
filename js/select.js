@@ -28,7 +28,6 @@ export function initSelect(select) {
 
   const wrapper = doc.createElement('span');
   wrapper.className = 'mds-select-control';
-  wrapper.classList.toggle('mds-select-control--inline', select.classList.contains('mds-select--inline'));
   select.before(wrapper);
   wrapper.append(select);
   select.hidden = true;
@@ -110,6 +109,9 @@ export function initSelect(select) {
   function refresh() {
     if (destroyed) return;
     close();
+    wrapper.classList.toggle('mds-select-control--inline', select.classList.contains('mds-select--inline'));
+    wrapper.classList.toggle('mds-select-control--text', select.classList.contains('mds-select--text'));
+    trigger.className = `${select.className} mds-select-trigger`;
     nameControl();
     trigger.textContent = select.selectedOptions[0]?.label || select.dataset.placeholder || 'Select an option';
     trigger.disabled = select.matches(':disabled') || enabled().length === 0;

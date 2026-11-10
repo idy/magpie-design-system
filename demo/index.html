@@ -21,8 +21,8 @@
   <div class="mds-titlebar-content">
     <nav class="mds-crumbs" aria-label="Breadcrumb"><span>Components</span><span class="mds-crumb-sep" aria-hidden="true">/</span><span aria-current="page" id="crumb">Controls</span></nav>
     <div class="mds-titlebar-actions">
-      <span class="mds-status" data-tone="good" role="status"><i class="mds-dot" aria-hidden="true"></i><span>v0.4.1</span></span>
-      <button class="mds-pill" id="pill-demo" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span>Update 0.5.0</span></button>
+      <span class="mds-status" data-tone="good" role="status"><i class="mds-dot" aria-hidden="true"></i><span>v0.4.2</span></span>
+      <button class="mds-pill mds-pill--responsive" id="pill-demo" type="button" aria-label="Check for app updates" title="Check for app updates"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span class="mds-pill-label">Update 0.5.0</span></button>
     </div>
     <div class="mds-window-controls" hidden>
       <button data-window-action="minimize" aria-label="Minimise"><svg aria-hidden="true"><use href="../icons/icons.svg#minimize"/></svg></button>
@@ -88,6 +88,15 @@
             <button class="mds-icon-button" type="button" aria-label="Reload" title="Reload"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#reload"/></svg></button>
           </div>
         </div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Toolbar controls</h3><p>A controlled button uses the shared switch. Update and refresh keep distinct glyphs; compact faces align with the switch track.</p></div>
+          <div class="mds-row-control mds-titlebar-actions mds-titlebar-actions--balanced">
+            <span class="mds-status" role="status" aria-label="Demo disconnected"><i class="mds-dot" aria-hidden="true"></i></span>
+            <span class="mds-action-slot--select"><label class="mds-visually-hidden" for="demo-routing">Routing mode</label><select class="mds-select mds-select--text" id="demo-routing"><option>Rule-based</option><option>Global (Kill-Switch)</option></select></span>
+            <button class="mds-switch" type="button" role="switch" aria-checked="false" id="demo-connection" aria-label="Connect demo" title="Connect demo"><span class="mds-switch-track" aria-hidden="true"></span></button>
+            <button class="mds-pill mds-pill--responsive" type="button" id="demo-update" aria-label="Check for app updates" title="Check for app updates"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span class="mds-pill-label">Check for updates</span></button>
+            <button class="mds-icon-button mds-icon-button--compact" type="button" aria-label="Refresh demo" title="Refresh demo"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#reload"/></svg></button>
+          </div>
+        </div>
         <div class="mds-row"><div class="mds-row-label"><label for="dropdown-demo">Dropdown menu</label><p><code>initSelect()</code> draws the menu with the same theme as the control.</p></div>
           <div class="mds-row-control">
             <select class="mds-select" id="dropdown-demo" aria-describedby="dropdown-hint">
@@ -95,6 +104,13 @@
               <optgroup label="Other modes"><option value="scheduled" disabled>Scheduled · unavailable</option><option value="paused">Paused</option></optgroup>
             </select>
             <span class="mds-hint" id="dropdown-hint">Use arrow keys to browse, Enter to select and Escape to cancel. Type to find an option.</span>
+          </div>
+        </div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Text dropdowns</h3><p><code>.mds-select--text</code> for a current value in a toolbar or metadata row.</p></div>
+          <div class="mds-row-control demo-inline">
+            <div class="mds-toolbar-label"><label for="text-mode">Mode</label><select class="mds-select mds-select--text" id="text-mode"><option>Rule-based</option><option>Global</option></select></div>
+            <div class="mds-toolbar-label"><label for="text-exit">Gateway</label><select class="mds-select mds-select--text" id="text-exit"><option>Primary exit</option><option>Backup exit</option></select></div>
+            <div class="mds-toolbar-label"><label for="text-level">Log level</label><select class="mds-select mds-select--text" id="text-level"><option>Info</option><option>Debug</option><option>Warning</option></select></div>
           </div>
         </div>
         <div class="mds-row"><div class="mds-row-label"><label for="dropdown-disabled">Managed dropdown</label><p>A disabled control keeps its current value visible.</p></div>
@@ -116,7 +132,7 @@
 
     <!-- Settings -->
     <section class="mds-stack" data-page-panel="settings" aria-labelledby="h-settings" hidden>
-      <div class="mds-section-heading"><h2 id="h-settings">Settings</h2><p>Label on the left, control on the right. Rows stack when the group itself is narrower than 560px.</p></div>
+      <div class="mds-section-heading"><h2 id="h-settings">Settings</h2><p>Preference rows give descriptions the flexible column and align short controls at the right. They stack below 400px; long editors use a full-width row.</p></div>
       <div class="mds-card">
         <div class="demo-card-main">
           <div><strong class="mds-card-title">Network connection</strong><p class="mds-card-hint">Connecting and signing in are separate. Closing the window keeps the app in the menu bar.</p></div>
@@ -129,21 +145,21 @@
         </div>
       </div>
       <div class="mds-group" id="settings-form">
-        <div class="mds-row"><div class="mds-row-label"><label for="listen">Listen address</label><p>HTTP and SOCKS share this entry point.</p></div>
+        <div class="mds-row mds-row--preference"><div class="mds-row-label"><label for="listen">Listen address</label><p>HTTP and SOCKS share this entry point.</p></div>
           <div class="mds-row-control"><input class="mds-input mds-mono" id="listen" value="127.0.0.1:17890" spellcheck="false"><span class="mds-hint">Loopback addresses only.</span></div></div>
-        <div class="mds-row"><div class="mds-row-label"><label for="hostname">Device name<span class="mds-optional">Optional</span></label><p>How this device appears to others.</p></div>
+        <div class="mds-row mds-row--preference"><div class="mds-row-label"><label for="hostname">Device name<span class="mds-optional">Optional</span></label><p>How this device appears to others.</p></div>
           <div class="mds-row-control"><input class="mds-input" id="hostname" placeholder="Leave empty to use the computer name" spellcheck="false"></div></div>
-        <div class="mds-row"><div class="mds-row-label"><label for="mode">Mode</label></div>
+        <div class="mds-row mds-row--preference"><div class="mds-row-label"><label for="mode">Mode</label></div>
           <div class="mds-row-control"><select class="mds-select" id="mode"><option>Split by rules</option><option>Global</option></select></div></div>
-        <div class="mds-row mds-row--toggle"><div class="mds-row-label"><label for="ipv6">Direct IPv6</label><p>Let direct connections use IPv6.</p></div>
+        <div class="mds-row mds-row--preference mds-row--toggle"><div class="mds-row-label"><label for="ipv6">Direct IPv6</label><p>Let direct connections use IPv6.</p></div>
           <div class="mds-row-control"><label class="mds-switch"><input type="checkbox" role="switch" id="ipv6" checked><span class="mds-switch-track"></span></label></div></div>
-        <div class="mds-row mds-row--toggle"><div class="mds-row-label"><label for="locked">Managed setting</label><p>Disabled controls keep their value visible.</p></div>
+        <div class="mds-row mds-row--preference mds-row--toggle"><div class="mds-row-label"><label for="locked">Managed setting</label><p>Disabled controls keep their value visible.</p></div>
           <div class="mds-row-control"><label class="mds-switch"><input type="checkbox" role="switch" id="locked" disabled><span class="mds-switch-track"></span></label></div></div>
-        <div class="mds-row"><div class="mds-row-label"><label for="mtu">MTU</label><p>Largest packet size.</p></div>
+        <div class="mds-row mds-row--preference"><div class="mds-row-label"><label for="mtu">MTU</label><p>Largest packet size.</p></div>
           <div class="mds-row-control"><div class="mds-input-unit"><input class="mds-input mds-mono" type="number" id="mtu" value="1400" min="1280" max="9000"><span>bytes</span></div><span class="mds-hint">1280–9000. Default 1400.</span></div></div>
-        <div class="mds-row"><div class="mds-row-label"><label for="proxy">Proxy DNS</label><p>Resolved through the selected exit.</p></div>
+        <div class="mds-row mds-row--preference"><div class="mds-row-label"><label for="proxy">Proxy DNS</label><p>Resolved through the selected exit.</p></div>
           <div class="mds-row-control"><input class="mds-input mds-mono" id="proxy" value="8.8.8.8:99999" aria-invalid="true" aria-describedby="proxy-error" spellcheck="false"><span class="mds-hint" data-tone="error" id="proxy-error">Port must be between 1 and 65535.</span></div></div>
-        <div class="mds-row"><div class="mds-row-label"><label for="domains">Proxy domains</label><p>One per line. Subdomains match.</p></div>
+        <div class="mds-row mds-row--preference mds-row--stacked"><div class="mds-row-label"><label for="domains">Proxy domains</label><p>One per line. Subdomains match.</p></div>
           <div class="mds-row-control"><textarea class="mds-textarea mds-mono" id="domains" rows="3" spellcheck="false">github.com
 example.org</textarea></div></div>
       </div>

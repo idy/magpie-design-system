@@ -7,8 +7,8 @@ const assert = (condition, detail) => { if (!condition) throw new Error(detail);
 const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
 const key = (trigger, value) => trigger.dispatchEvent(new KeyboardEvent('keydown', { key: value, bubbles: true, cancelable: true }));
 
-function mount(markup = '<option value="a">Apple</option><option value="b" disabled>Banana</option><option value="c">Cherry</option>', attributes = '') {
-  fixture.innerHTML = `<form><label for="fruit">Fruit</label><select class="mds-select" id="fruit" name="fruit" ${attributes}>${markup}</select><button type="button" id="after">After</button></form>`;
+function mount(markup = '<option value="a">Apple</option><option value="b" disabled>Banana</option><option value="c">Cherry</option>', attributes = '', classes = 'mds-select') {
+  fixture.innerHTML = `<form><label for="fruit">Fruit</label><select class="${classes}" id="fruit" name="fruit" ${attributes}>${markup}</select><button type="button" id="after">After</button></form>`;
   const select = fixture.querySelector('select');
   const api = initSelect(select);
   controls.push(api);
@@ -178,6 +178,76 @@ await test('A disabled fieldset updates its enhanced controls when enabled again
   assert(!api.trigger.disabled, 'Fieldset enable did not refresh the trigger');
   api.open();
   assert(api.trigger.getAttribute('aria-expanded') === 'true', 'Enabled fieldset control would not open');
+});
+
+await test('Text dropdowns preserve selection, form data and native fallback presentation', () => {
+  const { select, api, trigger, menu, form } = mount(undefined, '', 'mds-select mds-select--text');
+  assert(trigger.parentElement.classList.contains('mds-select-control--text'), 'Text wrapper is missing');
+  assert(getComputedStyle(trigger).backgroundColor === 'rgba(0, 0, 0, 0)', 'Text trigger has a boxed background');
+  assert(getComputedStyle(trigger).borderTopColor === 'rgba(0, 0, 0, 0)', 'Text trigger has a visible border');
+  trigger.click(); key(trigger, 'End'); key(trigger, 'Enter');
+  assert(new FormData(form).get('fruit') === 'c' && menu.hidden, 'Text selection did not update the form');
+  api.destroy(); controls = [];
+  assert(!select.hidden && getComputedStyle(select).backgroundColor === 'rgba(0, 0, 0, 0)', 'Native fallback lost its text presentation');
+});
+
+await test('Text dropdown variants synchronize class changes and retain invalid and disabled feedback', async () => {
+  const { select, trigger, api } = mount();
+  select.classList.add('mds-select--text'); await tick();
+  assert(trigger.classList.contains('mds-select--text') && trigger.parentElement.classList.contains('mds-select-control--text'), 'Added variant was not observed');
+  trigger.style.transition = 'none'; // Inspect the state, independent of the 120ms border transition.
+  select.setAttribute('aria-invalid', 'true'); await tick();
+  assert(getComputedStyle(trigger).borderTopColor !== 'rgba(0, 0, 0, 0)', 'Invalid text control has no error border');
+  select.disabled = true; await tick();
+  assert(trigger.disabled, 'Text control ignored disabled state');
+  select.classList.remove('mds-select--text'); api.refresh();
+  assert(!trigger.classList.contains('mds-select--text') && !trigger.parentElement.classList.contains('mds-select-control--text'), 'Removed variant remained on the generated control');
+});
+
+await test('Text dropdowns truncate long values inside narrow toolbar space', () => {
+  const { trigger } = mount('<option>A deliberately long current gateway name that exceeds a toolbar</option>', '', 'mds-select mds-select--text');
+  const host = document.createElement('div'); host.style.width = '180px';
+  trigger.parentElement.before(host); host.append(trigger.parentElement);
+  assert(trigger.getBoundingClientRect().right <= host.getBoundingClientRect().right + 1, 'Text trigger overflows its parent');
+  assert(getComputedStyle(trigger).textOverflow === 'ellipsis', 'Long text is not truncated');
+});
+
+function mountRow(width, modifiers = 'mds-row--preference') {
+  const toggle = modifiers.includes('mds-row--toggle');
+  fixture.innerHTML = `<div class="mds-group" style="width:${width}px"><div class="mds-row ${modifiers}"><div class="mds-row-label"><label for="preference">Language and startup preferences</label><p>A translated description can wrap without hiding its control.</p></div><div class="mds-row-control">${toggle ? '<label class="mds-switch"><input type="checkbox" id="preference"><span class="mds-switch-track"></span></label>' : '<input class="mds-input" id="preference" value="Follow system">'}</div></div></div>`;
+  return { group: fixture.querySelector('.mds-group'), row: fixture.querySelector('.mds-row'), label: fixture.querySelector('.mds-row-label'), control: fixture.querySelector('.mds-row-control') };
+}
+
+await test('Preference rows align compact controls at the right of wide and medium groups', () => {
+  for (const width of [800, 460]) {
+    const { group, label, control } = mountRow(width);
+    const l = label.getBoundingClientRect(), c = control.getBoundingClientRect();
+    assert(c.left > l.right && c.width >= 160 && c.width <= 220, `Control does not occupy a compact right column at ${width}px`);
+    assert(c.top < l.bottom && l.top < c.bottom, `Preference columns stacked too early at ${width}px`);
+    assert(group.scrollWidth <= group.clientWidth, 'Preference row overflows its group');
+  }
+});
+
+await test('Narrow preference rows stack and toggle controls stay beside their labels', () => {
+  const { label, control, group } = mountRow(320);
+  assert(control.getBoundingClientRect().top >= label.getBoundingClientRect().bottom, 'Narrow preference did not stack');
+  assert(group.scrollWidth <= group.clientWidth, 'Narrow preference overflows');
+  const toggle = mountRow(320, 'mds-row--preference mds-row--toggle');
+  assert(toggle.control.getBoundingClientRect().left >= toggle.label.getBoundingClientRect().right, 'Narrow toggle did not stay beside its label');
+  assert(toggle.group.scrollWidth <= toggle.group.clientWidth, 'Toggle overflows its group');
+});
+
+await test('Stacked rows give long editors the full row at every width', () => {
+  for (const modifiers of ['mds-row--stacked', 'mds-row--preference mds-row--stacked']) {
+    const { label, control } = mountRow(800, modifiers);
+    assert(control.getBoundingClientRect().top >= label.getBoundingClientRect().bottom, 'Stacked control stayed beside its label');
+    assert(Math.abs(control.getBoundingClientRect().width - label.getBoundingClientRect().width) < 1, 'Stacked control does not span the row');
+  }
+});
+
+await test('Ordinary form rows keep their existing container breakpoint', () => {
+  const { label, control } = mountRow(460, '');
+  assert(control.getBoundingClientRect().top >= label.getBoundingClientRect().bottom, 'Preference styles changed ordinary form rows');
 });
 
 const failed = results.filter((result) => !result.passed);

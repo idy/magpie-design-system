@@ -15,7 +15,7 @@ The visual language follows [Magpie](https://github.com/yetone/magpie) by
   beside an app's own styles.
 - **Accessible by default.** State comes from native attributes (`disabled`,
   `aria-selected`, `aria-current`, `aria-busy`, `aria-invalid`, `:checked`), with
-  visible focus rings, 44px touch targets on coarse pointers and reduced-motion support.
+  visible focus rings, 44px-high targets on coarse pointers and reduced-motion support.
 
 ## Use it
 
@@ -27,16 +27,16 @@ app's static assets and serve them from your own origin. Include `fonts/`
 beside `css/` so the registered font URLs resolve:
 
 ```sh
-git clone --depth 1 --branch v0.4.1 https://github.com/idy/magpie-design-system.git /tmp/mds
+git clone --depth 1 --branch v0.4.2 https://github.com/idy/magpie-design-system.git /tmp/mds
 cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 ```
 
 **Or load from a CDN** on public pages:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.1/css/magpie.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.2/css/magpie.css">
 <script type="module">
-  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.1/js/magpie.js';
+  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.2/js/magpie.js';
 </script>
 ```
 
@@ -44,7 +44,7 @@ cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 `./css` to the stylesheet):
 
 ```sh
-npm install github:idy/magpie-design-system#v0.4.1
+npm install github:idy/magpie-design-system#v0.4.2
 ```
 
 `css/magpie.css` imports everything. To pick layers, link them in this order:
@@ -152,7 +152,7 @@ All tokens are custom properties on `:root`, prefixed `--mds-`.
 | Overlays | `hover`, `selected`, `wash`, `subtle-hover`, `icon-hover`, `button-hover`, `field-hover` | Translucent hover and selection layers that work on any surface |
 | Details | `inline-code`, `scroll-thumb`, `scroll-thumb-hover`, `spinner-line`, `switch-off`, `switch-knob`, `code-key`, `code-value`, `actionbar`, `toast-shadow`, `dialog-shadow` | Component specifics |
 | Type | `font` (Lato), `font-display` and `font-action` (Montserrat), `font-heading` (Monda), `mono`, `text-title` (1.25rem), `text-heading` (1rem), `text-body` (0.875rem), `text-note` (0.8125rem), `text-caption` (0.75rem), `text-code` (0.8125rem) | Semantic font families and the compact type scale |
-| Layout | `gutter`, `gap`, `section-gap`, `control-height`, `titlebar-height`, `sidebar-width` | Shell geometry; `gutter` and `sidebar-width` shrink on narrow windows |
+| Layout | `gutter`, `gap`, `section-gap`, `control-height`, `compact-control-height`, `titlebar-height`, `titlebar-visual-gap`, `sidebar-width` | Shell geometry; compact action faces and switch tracks share a 20px height; `gutter` and `sidebar-width` shrink on narrow windows |
 | Radius | `radius-xs` (4px), `radius-sm` (8px), `radius-md` (10px), `radius-lg` (12px), `radius-xl` (14px), `radius-pill` | Inline code, controls, segmented tabs and notices, groups and cards, dialogs, pills and switches |
 | Motion | `duration-fast` (120ms), `duration` (150ms), `ease` | Control transitions and the toast entrance |
 
@@ -165,24 +165,78 @@ component has tones.
 | --- | --- | --- |
 | Button | `<button class="mds-button">` + `mds-button--primary`, `--subtle`, `--small` | Primary is for the one action that commits work |
 | Link button | `<button class="mds-link-button">` | Secondary actions in cards and footers |
-| Icon button | `<button class="mds-icon-button" aria-label="…">` | Always give it an accessible name |
+| Icon button | `<button class="mds-icon-button" aria-label="…">`; `mds-icon-button--compact` for slim toolbar chrome | Always give it an accessible name; compact faces match the switch track |
 | Input and textarea | `.mds-input`, `.mds-textarea` | `aria-invalid="true"` marks an error; add `.mds-mono` for addresses and code |
-| Dropdown | `<select class="mds-select">`; `.mds-select--inline` for toolbars | `initSelect()` replaces the platform picker with a themed listbox, preserving form data and events |
+| Dropdown | `<select class="mds-select">`; `.mds-select--inline` for a bounded toolbar field; `.mds-select--text` for an unboxed value | `initSelect()` replaces the platform picker with a themed listbox, preserving form data and events |
 | Input with unit | `<div class="mds-input-unit"><input class="mds-input"><span>bytes</span></div>` | |
 | Checkbox | `<label class="mds-check"><input type="checkbox">Label</label>` | |
-| Switch | `<label class="mds-switch"><input type="checkbox" role="switch"><span class="mds-switch-track"></span></label>` | Label it with `<label for>` or `aria-label` |
+| Switch | `.mds-switch` containing `.mds-switch-track`; use a labelled checkbox or a controlled `<button role="switch" aria-checked="false">` | Both forms share the same track, knob, focus and disabled states; the app owns a button's checked state |
 | Segmented tabs | `<div class="mds-tabs" role="tablist">` with `role="tab"` buttons; `.mds-tabs--fill` | Use with `initTabs()` |
 | Section heading | `<div class="mds-section-heading"><h2>…</h2><p>…</p></div>` | |
-| Settings group | `.mds-group` > `.mds-row` > `.mds-row-label` + `.mds-row-control`; `.mds-row--toggle`, `.mds-hint`, `.mds-optional`, `.mds-note` | Rows stack when the group is narrower than 560px (container query) |
+| Settings group | `.mds-group` > `.mds-row` > `.mds-row-label` + `.mds-row-control`; `.mds-row--toggle`, `--preference`, `--stacked`, `.mds-hint`, `.mds-optional`, `.mds-note` | Form rows stack below 560px; preference rows keep a compact control column until 400px; stacked rows are always full-width |
 | Card | `.mds-card` with `.mds-card-title`, `.mds-card-hint`, `.mds-card-footer` | A single surface; do not nest cards |
 | Notice | `<div class="mds-notice" role="alert"><div><strong>…</strong><p>…</p></div>[button]</div>` | Defaults to warn; `data-tone="error"` or `"accent"` |
 | Status | `<span class="mds-status" data-tone="good"><i class="mds-dot"></i><span>…</span></span>`; `.mds-status--note` | A `data-tone` on the dot overrides the line's tone |
-| Pill | `<button class="mds-pill">` | One pending action, e.g. an update; `aria-busy="true"` spins its icon |
+| Pill | `<button class="mds-pill">`; `mds-pill--icon` for an icon action, `mds-pill--responsive` for text that compacts below 640px | Use `.mds-pill-label` and an accessible name; `aria-busy="true"` spins its icon; compact variants draw 20px faces inside 32px or 44px click targets |
 | Spinner, loading | `.mds-spinner`, `.mds-loading` | |
 | Toast | `.mds-toast` | Created by `toast()` |
 | Dialog | `<dialog class="mds-dialog">` with `<form method="dialog">` and `.mds-dialog-actions`; `.mds-dialog--wide` | Use with `openDialog()` |
 | Code | `.mds-code` > `.mds-code-header`, `.mds-code-meta`, `.mds-code-body` of `.mds-code-line`s, `.mds-code-footer`; `.mds-pre` for logs | Lines are numbered with CSS counters; colour with `.mds-code-key`, `-value`, `-comment` |
 | Utilities | `.mds-icon`, `.mds-mono`, `.mds-tabular`, `.mds-visually-hidden` | |
+
+### Toolbar actions
+
+A connection action can keep native button behavior while using the shared
+switch anatomy. The application owns `aria-checked`, disabled and pending
+state; the stylesheet does not optimistically toggle an async operation.
+
+```html
+<div class="mds-titlebar-actions mds-titlebar-actions--balanced">
+  <button class="mds-switch" type="button" role="switch" aria-checked="false" aria-label="Connect">
+    <span class="mds-switch-track" aria-hidden="true"></span>
+  </button>
+  <button class="mds-pill mds-pill--responsive" type="button" aria-label="Check for app updates">
+    <svg class="mds-icon" aria-hidden="true"><use href="./mds/icons/icons.svg#up"/></svg>
+    <span class="mds-pill-label" aria-live="polite">Check for updates</span>
+  </button>
+  <button class="mds-icon-button mds-icon-button--compact" type="button" aria-label="Refresh">
+    <svg class="mds-icon" aria-hidden="true"><use href="./mds/icons/icons.svg#reload"/></svg>
+  </button>
+</div>
+```
+
+Use `mds-pill--icon` for a permanently compact action, or `mds-pill--responsive`
+to keep the label on desktop and compact below 640px. Both draw a slim 20px
+face aligned with the switch track; the icon face is 28px wide with a 16px
+glyph. The transparent native target remains 32px square, or 44px for coarse
+pointers. `mds-icon-button--compact` uses the same 20px visible height for its
+hover/focus treatment. Backgrounds, borders and focus rings follow the slim
+face instead of painting the outer click target. Compact faces use fully
+rounded capsule ends, matching the switch track. The
+`mds-pill-label` stays accessible when visually hidden, including live status
+updates. Keep an explicit `aria-label` or `aria-labelledby` on the button.
+Busy/error labels do not stretch compact targets. Use `aria-busy` for busy
+motion and `data-tone="error"` for failure; choose a spinner glyph for progress.
+Keep an update-specific glyph such as `up` for update actions and reserve
+`reload` for refresh, so compact actions remain distinguishable.
+
+Add `mds-titlebar-actions--balanced` to a shared action row to give visible
+content equal 8px intervals through `--mds-titlebar-visual-gap`. The preset
+accounts for text-select padding/caret geometry, switch tracks, compact pill
+faces and the Phosphor reload glyph. Use `mds-action-slot--select` or
+`mds-action-slot--switch` when an app wrapper surrounds those controls. Direct
+shared controls are recognized automatically. Dense rows trim horizontal
+hit padding to 38px for switches, 32px for compact update actions and 24px for
+refresh, while retaining 44px height on coarse pointers. This keeps the 8px
+visual gaps free of overlapping click targets. Text-select end padding is
+calculated from the shared gap and caret geometry, so the text layout edge
+to caret also follows the 8px rhythm. Standalone
+controls retain their original sizing. Spacing is preserved when updates are
+hidden or change state; do not add product-specific compensation.
+
+Both checkbox and button switches use `--mds-switch-knob` for the thumb in
+light and dark, with matching checked, focus and disabled treatment. The
+34×20px track stays centered inside a 44px touch target.
 
 ### Custom dropdown
 
@@ -229,6 +283,53 @@ automatically. `destroy()` removes generated markup and listeners and
 restores the original select. Calling `initSelect()` twice on one element
 returns the same controller. Multiple-selection and list-style selects
 (`multiple` or `size > 1`) are intentionally left to other controls.
+
+Use `.mds-select--text` when the current value belongs in a titlebar,
+toolbar or metadata row rather than a boxed form field:
+
+```html
+<label for="log-level">Log level</label>
+<select class="mds-select mds-select--text" id="log-level">
+  <option>Info</option><option>Debug</option><option>Warning</option>
+</select>
+```
+
+The variant keeps the caret, keyboard focus, invalid/disabled feedback and
+all dropdown behavior. It sizes to the value within its parent and truncates
+long values. It also works as a native select before enhancement. Adding or
+removing presentation classes is observed; `refresh()` also synchronizes the
+trigger and wrapper classes. No additional JavaScript API is needed.
+
+### Preference rows
+
+The default `.mds-row` gives a short label a bounded column and the form
+control the remaining width. Add `.mds-row--preference` when explanatory copy
+should take the flexible column and a short input, dropdown or switch should
+align at the right:
+
+```html
+<div class="mds-group">
+  <div class="mds-row mds-row--preference">
+    <div class="mds-row-label"><label for="language">Language</label><p>Applies immediately.</p></div>
+    <div class="mds-row-control"><select class="mds-select" id="language"><option>Follow system</option><option>English</option></select></div>
+  </div>
+  <div class="mds-row mds-row--preference mds-row--toggle">
+    <div class="mds-row-label"><label for="auto-connect">Connect on launch</label></div>
+    <div class="mds-row-control"><label class="mds-switch"><input type="checkbox" id="auto-connect" role="switch"><span class="mds-switch-track"></span></label></div>
+  </div>
+  <div class="mds-row mds-row--preference mds-row--stacked">
+    <div class="mds-row-label"><label for="domains">Domains</label></div>
+    <div class="mds-row-control"><textarea class="mds-textarea" id="domains"></textarea></div>
+  </div>
+</div>
+```
+
+Preference rows are at least 64px tall and their control column is 160–220px.
+Below a 400px group width they stack, while toggle rows keep their switch
+beside the label. `.mds-row--stacked` puts the control below its label at every
+width, including ordinary form rows; use it for multiline editors. Row height
+grows with translated or long descriptions. Existing default form rows and
+their 560px breakpoint are unchanged.
 
 ### App shell
 
@@ -337,12 +438,20 @@ With the demo server running, open
 browser regression suite. It covers pointer and keyboard selection, disabled
 items and groups, typeahead, form data, reset, required validation, dynamic
 options, clipped groups, viewport placement, labels, teardown, disabled
-fieldsets and the fallback portal's nested theme. These browser checks run
+fieldsets and the fallback portal's nested theme. It also verifies text-dropdown
+presentation and variants, truncation, preference-row alignment and stacking,
+and unchanged default form-row behavior. These browser checks run
 separately from the Node consistency checks in `npm test`.
 
 Open <http://127.0.0.1:4173/tests/nav.html> for the nested navigation suite,
 which checks parent disclosure, active paths, selection vetoes and disabled
 or foreign items.
+
+Open <http://127.0.0.1:4173/tests/toolbar.html> at desktop and narrow widths
+for toolbar regression checks: button/checkbox switch parity and thumb
+contrast, 20px action faces aligned with switch tracks, 44px touch targets, stable busy/error geometry,
+and separated click targets. The page also exposes an invalid text dropdown
+for checking that its red border remains visible while hovered.
 
 Keep the two dark-theme blocks in `css/tokens.css` identical; `npm test`
 fails otherwise. Bump `version` in `package.json` together with the pinned

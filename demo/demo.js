@@ -46,7 +46,14 @@ $('#discard').addEventListener('click', async () => {
 // Feedback.
 $('#show-toast').addEventListener('click', () => toast('YAML copied'));
 $('#copy-code').addEventListener('click', () => toast('YAML copied'));
-$('#pill-demo').addEventListener('click', () => toast('Update checks are simulated on this page'));
+for (const button of [$('#pill-demo'), $('#demo-update')]) button.addEventListener('click', () => toast('Update checks are simulated on this page'));
+$('#demo-connection').addEventListener('click', (event) => {
+  const button = event.currentTarget;
+  const connected = button.getAttribute('aria-checked') !== 'true';
+  button.setAttribute('aria-checked', String(connected));
+  button.setAttribute('aria-label', connected ? 'Disconnect demo' : 'Connect demo');
+  button.title = button.getAttribute('aria-label');
+});
 $('#show-dialog').addEventListener('click', async () => {
   const result = await openDialog($('#dialog'));
   $('#dialog-result').textContent = `Closed with “${result}”`;
