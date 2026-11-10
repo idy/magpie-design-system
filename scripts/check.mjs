@@ -72,7 +72,7 @@ for (const match of read('demo/index.html').matchAll(/class="([^"]+)"/g)) {
 }
 
 // The module exports what the README documents.
-const exported = new Set([...read('js/magpie.js').matchAll(/export function (\w+)/g)].map((match) => match[1]));
+const exported = new Set(Object.keys(await import(new URL('../js/magpie.js', import.meta.url))));
 for (const match of read('README.md').matchAll(/^\| `(\w+)\(/gm)) {
   if (!exported.has(match[1])) fail(`README.md documents ${match[1]}() but js/magpie.js does not export it`);
 }

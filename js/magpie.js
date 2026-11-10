@@ -1,6 +1,8 @@
 // Magpie Design System: behaviour for the components in css/.
 // A dependency-free ES module. Nothing runs on import; call what you need.
 
+export { initSelect } from './select.js';
+
 const THEMES = new Set(['light', 'dark']);
 
 /**

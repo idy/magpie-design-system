@@ -72,6 +72,41 @@
 .mds-textarea { display: block; min-height: 80px; padding-block: 8px; line-height: 1.6; resize: vertical; }
 .mds-select--inline { width: auto; min-width: 112px; max-width: 180px; font-size: var(--mds-text-note); }
 
+/* ---- Custom dropdown (initSelect) ------------------------------------ */
+/* The hidden native select supplies form data; all interaction uses this trigger. */
+.mds-select-control { display: inline-block; width: 100%; min-width: 0; vertical-align: middle; }
+.mds-select-control--inline { width: auto; min-width: 112px; max-width: 180px; }
+.mds-select-trigger {
+  display: block; width: 100%; min-width: 0; max-width: none;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: start;
+}
+.mds-select-trigger:focus:not(:focus-visible) { outline: none; }
+.mds-select-trigger[aria-expanded="true"] { border-color: var(--mds-accent-ink); }
+.mds-select-menu {
+  position: fixed; inset: auto; z-index: 20; margin: 0; padding: 4px;
+  box-sizing: border-box; max-height: 280px; overflow-y: auto; overscroll-behavior: contain;
+  border: 1px solid var(--mds-line-strong); border-radius: var(--mds-radius-md);
+  background: var(--mds-surface); color: var(--mds-ink);
+  box-shadow: 0 8px 24px var(--mds-toast-shadow);
+  font: 400 var(--mds-text-note)/1.5 var(--mds-font);
+}
+.mds-select-option {
+  position: relative; display: flex; align-items: center; min-height: 32px;
+  padding: 6px 10px 6px 28px; border-radius: var(--mds-radius-xs);
+  cursor: pointer; user-select: none; -webkit-user-select: none; overflow-wrap: anywhere;
+}
+.mds-select-option::before {
+  content: ""; position: absolute; top: 50%; left: 11px; width: 5px; height: 9px;
+  border-right: 1.7px solid var(--mds-accent-ink); border-bottom: 1.7px solid var(--mds-accent-ink);
+  opacity: 0; transform: translateY(-65%) rotate(45deg);
+}
+.mds-select-option[aria-selected="true"] { font-weight: 500; }
+.mds-select-option[aria-selected="true"]::before { opacity: 1; }
+.mds-select-option[data-active] { background: var(--mds-selected); color: var(--mds-ink-strong); }
+.mds-select-option[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.mds-select-group { padding: 8px 10px 4px; color: var(--mds-muted); font-size: var(--mds-text-caption); }
+@media (pointer: coarse) { .mds-select-option { min-height: 44px; } }
+
 /* An input with a trailing unit: <div class="mds-input-unit"><input class="mds-input"><span>ms</span></div> */
 .mds-input-unit { position: relative; max-width: 160px; }
 .mds-input-unit .mds-input { padding-right: 44px; }

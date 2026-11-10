@@ -1,4 +1,4 @@
-import { setTheme, toast, openDialog, initTabs, initNav, detectWindowHost, initWindowChrome } from '../js/magpie.js';
+import { setTheme, toast, openDialog, initSelect, initTabs, initNav, detectWindowHost, initWindowChrome } from '../js/magpie.js';
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -8,6 +8,7 @@ initWindowChrome($('#titlebar'), detectWindowHost());
 const themeKey = 'mds-demo-theme';
 $('#theme').value = localStorage.getItem(themeKey) || 'system';
 setTheme($('#theme').value);
+for (const select of document.querySelectorAll('select.mds-select')) initSelect(select);
 $('#theme').addEventListener('change', (event) => {
   setTheme(event.target.value);
   localStorage.setItem(themeKey, event.target.value);
