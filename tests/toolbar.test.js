@@ -10,7 +10,7 @@ function test(name, run) {
 const icon = name => `<svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#${name}"/></svg>`;
 const pill = (classes = 'mds-pill--responsive') => `<button type="button" class="mds-pill ${classes}" aria-label="Check for app updates">${icon('up')}<span class="mds-pill-label" aria-live="polite">Check for updates</span></button>`;
 function mount() {
-  fixture.innerHTML = `<div class="mds-titlebar-actions"><button type="button" class="mds-switch" role="switch" aria-checked="false" aria-label="Connect"><span class="mds-switch-track" aria-hidden="true"></span></button>${pill()}<button type="button" class="mds-icon-button" aria-label="Refresh">${icon('reload')}</button></div>`;
+  fixture.innerHTML = `<div class="mds-titlebar-actions"><button type="button" class="mds-switch" role="switch" aria-checked="false" aria-label="Connect"><span class="mds-switch-track" aria-hidden="true"></span></button>${pill()}<button type="button" class="mds-icon-button mds-icon-button--compact" aria-label="Refresh">${icon('reload')}</button></div>`;
   return { toggle: fixture.querySelector('.mds-switch'), update: fixture.querySelector('.mds-pill'), refresh: fixture.querySelector('.mds-icon-button') };
 }
 function contrast(a, b) {
@@ -88,6 +88,18 @@ test('Compact busy/error states keep the same target and live status', () => {
     const bounds = update.getBoundingClientRect();
     if (matchMedia('(max-width:640px)').matches) assert(Math.abs(bounds.width - initial.width) < 1 && Math.abs(bounds.height - initial.height) < 1, `${phase}: target shifted`);
     assert(label.getAttribute('aria-live') === 'polite', 'Status announcement was removed');
+  }
+});
+
+test('Compact action faces match the switch track without shrinking click targets', () => {
+  const { toggle, update, refresh } = mount();
+  const trackHeight = toggle.querySelector('.mds-switch-track').getBoundingClientRect().height;
+  for (const button of [update, refresh]) {
+    const face = getComputedStyle(button, '::before');
+    assert(parseFloat(face.height) === trackHeight, 'Visible action height differs from the switch track');
+    assert(face.pointerEvents === 'none', 'Decorative face intercepts the button action');
+    assert(button.getBoundingClientRect().height >= trackHeight, 'Native click target is smaller than its face');
+    assert(getComputedStyle(button).backgroundColor === 'rgba(0, 0, 0, 0)', 'Outer click target is painted as a tall button');
   }
 });
 

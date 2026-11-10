@@ -56,6 +56,14 @@
   border: 0; border-radius: var(--mds-radius-sm); background: transparent; color: var(--mds-muted);
 }
 .mds-icon-button:hover:not(:disabled) { background: var(--mds-icon-hover); color: var(--mds-ink); }
+/* Compact toolbar chrome matches the 20px switch track. The native button
+   keeps its larger transparent hit area, including the coarse-pointer target. */
+.mds-icon-button--compact { position: relative; isolation: isolate; }
+.mds-icon-button--compact::before { content: ""; position: absolute; z-index: -1; box-sizing: border-box; width: 28px; height: var(--mds-compact-control-height); left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: var(--mds-radius-sm); pointer-events: none; }
+.mds-icon-button--compact:hover:not(:disabled) { background: transparent; }
+.mds-icon-button--compact:hover:not(:disabled)::before { background: var(--mds-icon-hover); }
+.mds-icon-button--compact:focus-visible { outline: none; }
+.mds-icon-button--compact:focus-visible::before { outline: 2px solid var(--mds-accent-ink); outline-offset: 2px; }
 
 .mds-button:disabled, .mds-link-button:disabled, .mds-icon-button:disabled { cursor: not-allowed; opacity: .45; }
 
@@ -135,9 +143,9 @@
 .mds-check input:focus-visible { outline: 2px solid var(--mds-accent-ink); outline-offset: 3px; }
 
 /* Switch: <label class="mds-switch"><input type="checkbox" role="switch"><span class="mds-switch-track"></span></label> */
-.mds-switch { position: relative; display: inline-flex; flex: 0 0 auto; width: 34px; height: 20px; cursor: pointer; }
+.mds-switch { position: relative; display: inline-flex; flex: 0 0 auto; width: 34px; height: var(--mds-compact-control-height); cursor: pointer; }
 .mds-switch input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: inherit; }
-.mds-switch-track { position: relative; width: 34px; height: 20px; border-radius: var(--mds-radius-pill); background: var(--mds-switch-off); transition: background-color var(--mds-duration); }
+.mds-switch-track { position: relative; width: 34px; height: var(--mds-compact-control-height); border-radius: var(--mds-radius-pill); background: var(--mds-switch-off); transition: background-color var(--mds-duration); }
 .mds-switch-track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--mds-switch-knob); box-shadow: 0 1px 2px #0006; transition: transform var(--mds-duration) var(--mds-ease); }
 /* A controlled button can use the same anatomy; its application owns the
    async action and aria-checked state rather than changing a checkbox value. */
@@ -249,12 +257,20 @@ button.mds-switch:disabled { cursor: not-allowed; }
 .mds-pill[data-tone="error"] { --mds-pill-ink: var(--mds-error); --mds-pill-line: var(--mds-error-line); --mds-pill-bg: var(--mds-error-bg); --mds-pill-hover: var(--mds-error-hover); }
 .mds-pill .mds-icon { width: 13px; height: 13px; }
 .mds-pill[aria-busy="true"] .mds-icon { animation: mds-spin 1s linear infinite; }
-/* Explicit icon actions keep a square target and the shared icon scale.
+/* A slim 20px face aligns with the switch track inside a larger hit target.
    Label text stays in the accessibility tree, including live status changes. */
+.mds-pill--icon, .mds-pill--responsive { position: relative; isolation: isolate; border-color: transparent; background: transparent; }
+.mds-pill--icon::before, .mds-pill--responsive::before { content: ""; position: absolute; z-index: -1; box-sizing: border-box; height: var(--mds-compact-control-height); inset-inline: 0; top: 50%; transform: translateY(-50%); border: 1px solid var(--mds-pill-line); border-radius: var(--mds-radius-sm); background: var(--mds-pill-bg); pointer-events: none; }
+.mds-pill--icon:hover:not(:disabled), .mds-pill--responsive:hover:not(:disabled) { background: transparent; }
+.mds-pill--icon:hover:not(:disabled)::before, .mds-pill--responsive:hover:not(:disabled)::before { background: var(--mds-pill-hover); }
+.mds-pill--icon:focus-visible, .mds-pill--responsive:focus-visible { outline: none; }
+.mds-pill--icon:focus-visible::before, .mds-pill--responsive:focus-visible::before { outline: 2px solid var(--mds-accent-ink); outline-offset: 2px; }
+.mds-pill--icon::before { width: 28px; left: 50%; right: auto; transform: translate(-50%, -50%); }
 .mds-pill--icon { width: 32px; height: 32px; min-width: 32px; min-height: 32px; padding: 0; border-radius: var(--mds-radius-sm); }
 .mds-pill--icon .mds-icon { width: 16px; height: 16px; }
 .mds-pill--icon .mds-pill-label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 @media (max-width: 640px) {
+  .mds-pill--responsive::before { width: 28px; left: 50%; right: auto; transform: translate(-50%, -50%); }
   .mds-pill--responsive { width: 32px; height: 32px; min-width: 32px; min-height: 32px; padding: 0; border-radius: var(--mds-radius-sm); }
   .mds-pill--responsive .mds-icon { width: 16px; height: 16px; }
   .mds-pill--responsive .mds-pill-label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

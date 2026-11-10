@@ -152,7 +152,7 @@ All tokens are custom properties on `:root`, prefixed `--mds-`.
 | Overlays | `hover`, `selected`, `wash`, `subtle-hover`, `icon-hover`, `button-hover`, `field-hover` | Translucent hover and selection layers that work on any surface |
 | Details | `inline-code`, `scroll-thumb`, `scroll-thumb-hover`, `spinner-line`, `switch-off`, `switch-knob`, `code-key`, `code-value`, `actionbar`, `toast-shadow`, `dialog-shadow` | Component specifics |
 | Type | `font` (Lato), `font-display` and `font-action` (Montserrat), `font-heading` (Monda), `mono`, `text-title` (1.25rem), `text-heading` (1rem), `text-body` (0.875rem), `text-note` (0.8125rem), `text-caption` (0.75rem), `text-code` (0.8125rem) | Semantic font families and the compact type scale |
-| Layout | `gutter`, `gap`, `section-gap`, `control-height`, `titlebar-height`, `sidebar-width` | Shell geometry; `gutter` and `sidebar-width` shrink on narrow windows |
+| Layout | `gutter`, `gap`, `section-gap`, `control-height`, `compact-control-height`, `titlebar-height`, `sidebar-width` | Shell geometry; compact action faces and switch tracks share a 20px height; `gutter` and `sidebar-width` shrink on narrow windows |
 | Radius | `radius-xs` (4px), `radius-sm` (8px), `radius-md` (10px), `radius-lg` (12px), `radius-xl` (14px), `radius-pill` | Inline code, controls, segmented tabs and notices, groups and cards, dialogs, pills and switches |
 | Motion | `duration-fast` (120ms), `duration` (150ms), `ease` | Control transitions and the toast entrance |
 
@@ -165,7 +165,7 @@ component has tones.
 | --- | --- | --- |
 | Button | `<button class="mds-button">` + `mds-button--primary`, `--subtle`, `--small` | Primary is for the one action that commits work |
 | Link button | `<button class="mds-link-button">` | Secondary actions in cards and footers |
-| Icon button | `<button class="mds-icon-button" aria-label="…">` | Always give it an accessible name |
+| Icon button | `<button class="mds-icon-button" aria-label="…">`; `mds-icon-button--compact` for slim toolbar chrome | Always give it an accessible name; compact faces match the switch track |
 | Input and textarea | `.mds-input`, `.mds-textarea` | `aria-invalid="true"` marks an error; add `.mds-mono` for addresses and code |
 | Dropdown | `<select class="mds-select">`; `.mds-select--inline` for a bounded toolbar field; `.mds-select--text` for an unboxed value | `initSelect()` replaces the platform picker with a themed listbox, preserving form data and events |
 | Input with unit | `<div class="mds-input-unit"><input class="mds-input"><span>bytes</span></div>` | |
@@ -177,7 +177,7 @@ component has tones.
 | Card | `.mds-card` with `.mds-card-title`, `.mds-card-hint`, `.mds-card-footer` | A single surface; do not nest cards |
 | Notice | `<div class="mds-notice" role="alert"><div><strong>…</strong><p>…</p></div>[button]</div>` | Defaults to warn; `data-tone="error"` or `"accent"` |
 | Status | `<span class="mds-status" data-tone="good"><i class="mds-dot"></i><span>…</span></span>`; `.mds-status--note` | A `data-tone` on the dot overrides the line's tone |
-| Pill | `<button class="mds-pill">`; `mds-pill--icon` for an icon action, `mds-pill--responsive` for text that compacts below 640px | Use `.mds-pill-label` and an accessible name; `aria-busy="true"` spins its icon; icon variants keep square 32px or 44px touch targets |
+| Pill | `<button class="mds-pill">`; `mds-pill--icon` for an icon action, `mds-pill--responsive` for text that compacts below 640px | Use `.mds-pill-label` and an accessible name; `aria-busy="true"` spins its icon; compact variants draw 20px faces inside 32px or 44px click targets |
 | Spinner, loading | `.mds-spinner`, `.mds-loading` | |
 | Toast | `.mds-toast` | Created by `toast()` |
 | Dialog | `<dialog class="mds-dialog">` with `<form method="dialog">` and `.mds-dialog-actions`; `.mds-dialog--wide` | Use with `openDialog()` |
@@ -199,15 +199,19 @@ state; the stylesheet does not optimistically toggle an async operation.
     <svg class="mds-icon" aria-hidden="true"><use href="./mds/icons/icons.svg#up"/></svg>
     <span class="mds-pill-label" aria-live="polite">Check for updates</span>
   </button>
-  <button class="mds-icon-button" type="button" aria-label="Refresh">
+  <button class="mds-icon-button mds-icon-button--compact" type="button" aria-label="Refresh">
     <svg class="mds-icon" aria-hidden="true"><use href="./mds/icons/icons.svg#reload"/></svg>
   </button>
 </div>
 ```
 
 Use `mds-pill--icon` for a permanently compact action, or `mds-pill--responsive`
-to keep the label on desktop and compact below 640px. Both use a square 32px
-target and 16px icon; coarse pointers receive a 44px square. The
+to keep the label on desktop and compact below 640px. Both draw a slim 20px
+face aligned with the switch track; the icon face is 28px wide with a 16px
+glyph. The transparent native target remains 32px square, or 44px for coarse
+pointers. `mds-icon-button--compact` uses the same 20px visible height for its
+hover/focus treatment. Backgrounds, borders and focus rings follow the slim
+face instead of painting the outer click target. The
 `mds-pill-label` stays accessible when visually hidden, including live status
 updates. Keep an explicit `aria-label` or `aria-labelledby` on the button.
 Busy/error labels do not stretch compact targets. Use `aria-busy` for busy
@@ -432,7 +436,7 @@ or foreign items.
 
 Open <http://127.0.0.1:4173/tests/toolbar.html> at desktop and narrow widths
 for toolbar regression checks: button/checkbox switch parity and thumb
-contrast, square icon pills, 44px touch targets, stable busy/error geometry,
+contrast, 20px action faces aligned with switch tracks, 44px touch targets, stable busy/error geometry,
 and separated click targets. The page also exposes an invalid text dropdown
 for checking that its red border remains visible while hovered.
 
