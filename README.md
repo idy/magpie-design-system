@@ -27,16 +27,16 @@ app's static assets and serve them from your own origin. Include `fonts/`
 beside `css/` so the registered font URLs resolve:
 
 ```sh
-git clone --depth 1 --branch v0.4.0 https://github.com/idy/magpie-design-system.git /tmp/mds
+git clone --depth 1 --branch v0.4.1 https://github.com/idy/magpie-design-system.git /tmp/mds
 cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 ```
 
 **Or load from a CDN** on public pages:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.0/css/magpie.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.1/css/magpie.css">
 <script type="module">
-  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.0/js/magpie.js';
+  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.1/js/magpie.js';
 </script>
 ```
 
@@ -44,7 +44,7 @@ cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 `./css` to the stylesheet):
 
 ```sh
-npm install github:idy/magpie-design-system#v0.4.0
+npm install github:idy/magpie-design-system#v0.4.1
 ```
 
 `css/magpie.css` imports everything. To pick layers, link them in this order:
@@ -352,9 +352,12 @@ The look and feel of this design system, and of the TailSplit window it was
 extracted from, is modelled on **[Magpie](https://github.com/yetone/magpie)**
 by **[yetone](https://github.com/yetone)** ([usemagpie.ai](https://usemagpie.ai)).
 Thank you, yetone, for the careful, native-feeling interface that inspired it.
-Magpie is released under the MIT License. This repository does not include
-Magpie source code; it is an independent implementation, and the name
-acknowledges where the style comes from.
+Magpie is released under the MIT License. Its original
+[copyright and permission notice](css/Magpie-MIT.txt) is retained alongside
+the CSS assets, so it accompanies vendored and packaged copies.
+This design system is maintained independently for idy.dev. Its name
+acknowledges the visual inspiration and does not imply affiliation with or
+endorsement by the upstream Magpie project.
 
 Interface icons are from **[Phosphor Icons](https://phosphoricons.com/)**,
 Regular weight. Their original [MIT copyright notice](icons/LICENSE) is
