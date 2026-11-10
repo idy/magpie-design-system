@@ -36,7 +36,7 @@
   --mds-control-height: 34px;
   --mds-compact-control-height: 20px;
   --mds-titlebar-height: 48px;
-  --mds-titlebar-visual-gap: 24px;
+  --mds-titlebar-visual-gap: 8px;
   --mds-sidebar-width: 200px;
 
   /* Radii: inline code, controls, segmented/notice/toast, groups and cards, dialogs. */

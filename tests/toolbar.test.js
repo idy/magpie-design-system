@@ -70,11 +70,12 @@ test('Explicit icon pills keep square geometry and normal icon scale', () => {
   assert(button.getAttribute('aria-label'), 'Icon action lost its accessible name');
 });
 
-test('Responsive pills preserve labels on desktop and square targets in narrow windows', () => {
+test('Responsive pills preserve desktop labels and compact faces in narrow windows', () => {
   const { update } = mount();
   const bounds = update.getBoundingClientRect(), label = update.querySelector('.mds-pill-label').getBoundingClientRect();
   if (matchMedia('(max-width:640px)').matches) {
-    assert(Math.abs(bounds.width - bounds.height) < 1, 'Compact action is not square');
+    const face = getComputedStyle(update, '::before');
+    assert(parseFloat(face.height) === 20 && bounds.width >= parseFloat(face.width), 'Compact face escaped its native target');
     assert(label.width <= 1, 'Compact action still paints its long label');
   } else {
     assert(label.width > 1 && bounds.width > bounds.height, 'Desktop action lost its readable label');
@@ -120,7 +121,7 @@ function faceBounds(button) {
 
 function assertEqualGaps(anchors, message) {
   const gaps = anchors.slice(1).map((anchor, index) => anchor.left - anchors[index].right);
-  assert(gaps.every(gap => Math.abs(gap - 24) < 1), `${message}: visual gaps ${gaps.join(', ')}`);
+  assert(gaps.every(gap => Math.abs(gap - 8) < 1), `${message}: visual gaps ${gaps.join(', ')}`);
 }
 
 test('Balanced action rows give switch, update face and refresh ink equal visible gaps', () => {
@@ -164,15 +165,15 @@ test('Every visible interval stays equal across status, mode and update states',
   } finally { control.destroy(); }
 });
 
-test('Coarse-pointer toolbar controls provide at least 44px targets', () => {
+test('Dense titlebar targets stay at least 24px wide and 44px tall on coarse pointers', () => {
   if (!matchMedia('(pointer:coarse)').matches) return;
-  const controls = Object.values(mount());
-  fixture.insertAdjacentHTML('beforeend', pill('mds-pill--icon'));
-  controls.push(fixture.lastElementChild);
-  for (const control of controls) {
+  for (const control of Object.values(mount())) {
     const bounds = control.getBoundingClientRect();
-    assert(bounds.width >= 44 && bounds.height >= 44, `${control.className}: undersized touch target`);
+    assert(bounds.width >= 24 && bounds.height >= 44, `${control.className}: undersized dense target`);
   }
+  fixture.insertAdjacentHTML('beforeend', pill('mds-pill--icon'));
+  const standalone = fixture.lastElementChild.getBoundingClientRect();
+  assert(standalone.width >= 44 && standalone.height >= 44, 'Standalone targets must retain their original size');
 });
 
 initSelect(document.querySelector('#invalid-text'));

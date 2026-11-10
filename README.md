@@ -15,7 +15,7 @@ The visual language follows [Magpie](https://github.com/yetone/magpie) by
   beside an app's own styles.
 - **Accessible by default.** State comes from native attributes (`disabled`,
   `aria-selected`, `aria-current`, `aria-busy`, `aria-invalid`, `:checked`), with
-  visible focus rings, 44px touch targets on coarse pointers and reduced-motion support.
+  visible focus rings, 44px-high targets on coarse pointers and reduced-motion support.
 
 ## Use it
 
@@ -221,14 +221,17 @@ Keep an update-specific glyph such as `up` for update actions and reserve
 `reload` for refresh, so compact actions remain distinguishable.
 
 Add `mds-titlebar-actions--balanced` to a shared action row to give visible
-content equal 24px intervals through `--mds-titlebar-visual-gap`. The preset
+content equal 8px intervals through `--mds-titlebar-visual-gap`. The preset
 accounts for text-select padding/caret geometry, switch tracks, compact pill
 faces and the Phosphor reload glyph. Use `mds-action-slot--select` or
 `mds-action-slot--switch` when an app wrapper surrounds those controls. Direct
-shared controls are recognized automatically. The shared optical insets keep
-the expanded click targets non-overlapping, reserve room at the window edge,
-and preserve spacing when updates are hidden or change state. Do not add
-product-specific spacing compensation on top of the preset.
+shared controls are recognized automatically. Dense rows trim horizontal
+hit padding to 38px for switches, 32px for compact update actions and 24px for
+refresh, while retaining 44px height on coarse pointers. This keeps the 8px
+visual gaps free of overlapping click targets. Text-select end padding is
+trimmed without moving the visible caret relative to its value. Standalone
+controls retain their original sizing. Spacing is preserved when updates are
+hidden or change state; do not add product-specific compensation.
 
 Both checkbox and button switches use `--mds-switch-knob` for the thumb in
 light and dark, with matching checked, focus and disabled treatment. The
