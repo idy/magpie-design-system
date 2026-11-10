@@ -27,7 +27,7 @@ jobs:
       - name: Stage static site
         run: |
           mkdir _site
-          cp index.html _site/
+          cp index.html CNAME _site/
           cp -R demo css js icons fonts _site/
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v3

@@ -65,7 +65,7 @@ from the same origin:
 
 ## Demo
 
-[Open the live component catalogue](https://idy.github.io/magpie-design-system/).
+[Open the live component catalogue](https://magpie-design-system.idy.dev/).
 It includes controls, settings, feedback, code panels, colour tokens and icons,
 with light, dark and system themes.
 
@@ -81,9 +81,11 @@ icon set, in light and dark.
 
 GitHub Pages deploys the catalogue automatically from `main` through
 `.github/workflows/pages.yml`, after `npm test` passes. Only `index.html`,
-`demo/`, `css/`, `js/`, `icons/` and `fonts/` enter the Pages artifact. The root URL
-redirects to `demo/` so the same relative asset paths work locally and under
-the GitHub project path. To redeploy without a commit, run the workflow
+`demo/`, `css/`, `js/`, `icons/`, `fonts/` and `CNAME` enter the Pages artifact.
+`CNAME` records `magpie-design-system.idy.dev`; the repository's Pages settings
+must also bind that hostname, with a DNS CNAME pointing to `idy.github.io`.
+The root URL redirects to `demo/` so the same relative asset paths work locally
+and on the custom domain. To redeploy without a commit, run the workflow
 manually from the repository's Actions tab.
 
 ## Theme
