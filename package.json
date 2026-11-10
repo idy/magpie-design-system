@@ -1,0 +1,29 @@
+{
+  "name": "@idy/magpie-design-system",
+  "version": "0.1.0",
+  "description": "Buildless CSS tokens, components and an app shell for the idy.dev desktop panels, styled after Magpie.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idy/magpie-design-system.git"
+  },
+  "files": [
+    "css",
+    "js",
+    "icons",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./js/magpie.js",
+    "./css": "./css/magpie.css",
+    "./css/*": "./css/*",
+    "./icons.svg": "./icons/icons.svg"
+  },
+  "style": "css/magpie.css",
+  "scripts": {
+    "test": "node scripts/check.mjs",
+    "demo": "python3 -m http.server 4173 --bind 127.0.0.1"
+  }
+}

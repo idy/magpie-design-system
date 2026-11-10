@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Magpie Design System</title>
+  <link rel="stylesheet" href="../css/magpie.css">
+  <link rel="stylesheet" href="demo.css">
+  <script type="module" src="demo.js"></script>
+</head>
+<body>
+<header class="mds-titlebar" id="titlebar">
+  <a class="mds-brand" href="./" aria-label="Magpie Design System home">
+    <span class="mds-brand-mark"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="5" style="fill:var(--mds-ink-strong)"/><path d="M1 21 21 1v15a5 5 0 0 1-5 5H1Z" style="fill:var(--mds-accent)"/><circle cx="7.5" cy="7.5" r="2" style="fill:var(--mds-canvas)"/></svg></span>
+    <span class="mds-brand-name">Magpie Design System</span>
+  </a>
+  <div class="mds-titlebar-content">
+    <nav class="mds-crumbs" aria-label="Breadcrumb"><span>Components</span><span class="mds-crumb-sep" aria-hidden="true">/</span><span aria-current="page" id="crumb">Controls</span></nav>
+    <div class="mds-titlebar-actions">
+      <span class="mds-status" data-tone="good" role="status"><i class="mds-dot" aria-hidden="true"></i><span>v0.1.0</span></span>
+      <button class="mds-pill" id="pill-demo" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span>Update 0.2.0</span></button>
+    </div>
+    <div class="mds-window-controls" hidden>
+      <button data-window-action="minimize" aria-label="Minimise"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 6h10"/></svg></button>
+      <button data-window-action="zoom" aria-label="Maximise or restore"><svg viewBox="0 0 12 12" aria-hidden="true"><rect x="1.5" y="1.5" width="9" height="9"/></svg></button>
+      <button data-window-action="close" aria-label="Close window"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m1 1 10 10M1 11 11 1"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="mds-shell">
+  <aside class="mds-sidebar">
+    <nav class="mds-nav" aria-label="Sections" id="nav">
+      <p class="mds-nav-group">Components</p>
+      <button class="mds-nav-item" data-page="controls" aria-current="page"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#toggle"/></svg><span>Controls</span></button>
+      <button class="mds-nav-item" data-page="settings"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#layout"/></svg><span>Settings</span></button>
+      <button class="mds-nav-item" data-page="feedback"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#bell"/></svg><span>Feedback</span></button>
+      <button class="mds-nav-item" data-page="code"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#code"/></svg><span>Code</span></button>
+      <p class="mds-nav-group">Foundations</p>
+      <button class="mds-nav-item" data-page="colour"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#palette"/></svg><span>Colour</span></button>
+      <button class="mds-nav-item" data-page="type"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#type"/></svg><span>Type and icons</span></button>
+    </nav>
+    <div class="mds-sidebar-footer">
+      <div class="mds-sidebar-item"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#file"/></svg><div><strong>magpie.css</strong><span>tokens · base · components · layout</span></div></div>
+      <div class="mds-sidebar-item"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#lock"/></svg>No build step, no dependencies</div>
+    </div>
+  </aside>
+
+  <main class="mds-workspace">
+    <div class="mds-toolbar demo-toolbar">
+      <div class="mds-section-heading demo-intro">
+        <h2>Interface kit for the idy.dev apps</h2>
+        <p>Desktop-panel components and tokens extracted from the TailSplit configuration window, in a visual language that follows <a href="https://github.com/yetone/magpie">Magpie</a>.</p>
+      </div>
+      <div class="mds-toolbar-actions">
+        <label class="mds-toolbar-label" for="theme"><span>Theme</span>
+          <select class="mds-select mds-select--inline" id="theme"><option value="system">Follow system</option><option value="light">Light</option><option value="dark">Dark</option></select>
+        </label>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <section class="mds-stack" data-page-panel="controls" aria-labelledby="h-controls">
+      <div class="mds-section-heading"><h2 id="h-controls">Controls</h2><p>Buttons name their action. Primary is reserved for the one action that commits the user's work.</p></div>
+      <div class="mds-group">
+        <div class="mds-row"><div class="mds-row-label"><h3>Buttons</h3><p><code>.mds-button</code> with <code>--primary</code>, <code>--subtle</code> and <code>--small</code>.</p></div>
+          <div class="mds-row-control demo-inline">
+            <button class="mds-button mds-button--primary" type="button">Save and apply</button>
+            <button class="mds-button" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#check"/></svg>Validate</button>
+            <button class="mds-button mds-button--subtle" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#reload"/></svg>Reload</button>
+            <button class="mds-button mds-button--small" type="button">Small</button>
+            <button class="mds-button" type="button" disabled>Disabled</button>
+          </div>
+        </div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Quiet actions</h3><p><code>.mds-link-button</code> and <code>.mds-icon-button</code> for secondary and toolbar actions.</p></div>
+          <div class="mds-row-control demo-inline">
+            <button class="mds-link-button" type="button">Change network…</button>
+            <button class="mds-link-button" type="button">View logs</button>
+            <button class="mds-icon-button" type="button" aria-label="Copy" title="Copy"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#copy"/></svg></button>
+            <button class="mds-icon-button" type="button" aria-label="Reload" title="Reload"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#reload"/></svg></button>
+          </div>
+        </div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Segmented tabs</h3><p><code>.mds-tabs</code> with <code>initTabs()</code>: arrow keys, Home and End.</p></div>
+          <div class="mds-row-control">
+            <div class="mds-tabs" role="tablist" aria-label="Editing mode" id="demo-tabs">
+              <button role="tab" aria-selected="true" aria-controls="tab-form" id="t-form">Form</button>
+              <button role="tab" aria-selected="false" aria-controls="tab-yaml" id="t-yaml"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#code"/></svg>YAML</button>
+              <button role="tab" aria-selected="false" aria-controls="tab-off" disabled>Unavailable</button>
+            </div>
+            <p class="mds-hint" id="tab-form" role="tabpanel" aria-labelledby="t-form">The form panel is showing.</p>
+            <p class="mds-hint" id="tab-yaml" role="tabpanel" aria-labelledby="t-yaml" hidden>The YAML panel is showing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section class="mds-stack" data-page-panel="settings" aria-labelledby="h-settings" hidden>
+      <div class="mds-section-heading"><h2 id="h-settings">Settings</h2><p>Label on the left, control on the right. Rows stack when the group itself is narrower than 560px.</p></div>
+      <div class="mds-card">
+        <div class="demo-card-main">
+          <div><strong class="mds-card-title">Network connection</strong><p class="mds-card-hint">Connecting and signing in are separate. Closing the window keeps the app in the menu bar.</p></div>
+          <div class="demo-inline"><button class="mds-button mds-button--primary" type="button">Connect</button><button class="mds-button" type="button">Disconnect</button></div>
+        </div>
+        <div class="mds-card-footer">
+          <button class="mds-link-button" type="button">Sign in…</button>
+          <button class="mds-link-button" type="button">Refresh exits</button>
+          <label class="mds-check demo-push"><input type="checkbox" checked>Open at login</label>
+        </div>
+      </div>
+      <div class="mds-group" id="settings-form">
+        <div class="mds-row"><div class="mds-row-label"><label for="listen">Listen address</label><p>HTTP and SOCKS share this entry point.</p></div>
+          <div class="mds-row-control"><input class="mds-input mds-mono" id="listen" value="127.0.0.1:17890" spellcheck="false"><span class="mds-hint">Loopback addresses only.</span></div></div>
+        <div class="mds-row"><div class="mds-row-label"><label for="hostname">Device name<span class="mds-optional">Optional</span></label><p>How this device appears to others.</p></div>
+          <div class="mds-row-control"><input class="mds-input" id="hostname" placeholder="Leave empty to use the computer name" spellcheck="false"></div></div>
+        <div class="mds-row"><div class="mds-row-label"><label for="mode">Mode</label></div>
+          <div class="mds-row-control"><select class="mds-select" id="mode"><option>Split by rules</option><option>Global</option></select></div></div>
+        <div class="mds-row mds-row--toggle"><div class="mds-row-label"><label for="ipv6">Direct IPv6</label><p>Let direct connections use IPv6.</p></div>
+          <div class="mds-row-control"><label class="mds-switch"><input type="checkbox" role="switch" id="ipv6" checked><span class="mds-switch-track"></span></label></div></div>
+        <div class="mds-row mds-row--toggle"><div class="mds-row-label"><label for="locked">Managed setting</label><p>Disabled controls keep their value visible.</p></div>
+          <div class="mds-row-control"><label class="mds-switch"><input type="checkbox" role="switch" id="locked" disabled><span class="mds-switch-track"></span></label></div></div>
+        <div class="mds-row"><div class="mds-row-label"><label for="mtu">MTU</label><p>Largest packet size.</p></div>
+          <div class="mds-row-control"><div class="mds-input-unit"><input class="mds-input mds-mono" type="number" id="mtu" value="1400" min="1280" max="9000"><span>bytes</span></div><span class="mds-hint">1280–9000. Default 1400.</span></div></div>
+        <div class="mds-row"><div class="mds-row-label"><label for="proxy">Proxy DNS</label><p>Resolved through the selected exit.</p></div>
+          <div class="mds-row-control"><input class="mds-input mds-mono" id="proxy" value="8.8.8.8:99999" aria-invalid="true" aria-describedby="proxy-error" spellcheck="false"><span class="mds-hint" data-tone="error" id="proxy-error">Port must be between 1 and 65535.</span></div></div>
+        <div class="mds-row"><div class="mds-row-label"><label for="domains">Proxy domains</label><p>One per line. Subdomains match.</p></div>
+          <div class="mds-row-control"><textarea class="mds-textarea mds-mono" id="domains" rows="3" spellcheck="false">github.com
+example.org</textarea></div></div>
+      </div>
+      <p class="mds-note">Section notes sit outside the group, for consequences that apply to the whole page. Inline <code>code</code> uses the mono face.</p>
+    </section>
+
+    <!-- Feedback -->
+    <section class="mds-stack" data-page-panel="feedback" aria-labelledby="h-feedback" hidden>
+      <div class="mds-section-heading"><h2 id="h-feedback">Feedback</h2><p>Each message names the problem and the way forward.</p></div>
+      <div class="mds-notice" role="alert"><div><strong>The configuration on disk has changed</strong><p>Your draft is kept. Reload the latest configuration before saving so other changes are not overwritten.</p></div><button class="mds-button mds-button--small" type="button">Reload</button></div>
+      <div class="mds-notice" data-tone="error" role="alert"><div><strong>The action did not finish</strong><p>The network service did not respond. Check that it is running, then try again.</p></div></div>
+      <div class="mds-notice" data-tone="accent" role="status"><div><strong>Version 0.2.0 is ready to install</strong><p>Installing ends the current connection and restarts the app.</p></div><button class="mds-button mds-button--small mds-button--primary" type="button">Install</button></div>
+      <div class="mds-group">
+        <div class="mds-row"><div class="mds-row-label"><h3>Status</h3><p><code>.mds-status</code> with <code>data-tone</code>.</p></div>
+          <div class="mds-row-control demo-inline demo-centre">
+            <span class="mds-status" data-tone="good"><i class="mds-dot"></i><span>Connected</span></span>
+            <span class="mds-status" data-tone="warn"><i class="mds-dot"></i><span>Exit unavailable</span></span>
+            <span class="mds-status" data-tone="error"><i class="mds-dot"></i><span>Service stopped</span></span>
+            <span class="mds-status"><i class="mds-dot"></i><span>Disconnected</span></span>
+          </div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Pills</h3><p>One pending action in the titlebar.</p></div>
+          <div class="mds-row-control demo-inline demo-centre">
+            <button class="mds-pill" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span>Update 0.2.0</span></button>
+            <button class="mds-pill" type="button" aria-busy="true" disabled><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#reload"/></svg><span>Downloading 42%</span></button>
+            <button class="mds-pill" type="button" data-tone="error"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#alert"/></svg><span>Update failed</span></button>
+          </div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Toast and dialog</h3><p><code>toast()</code> and <code>openDialog()</code>.</p></div>
+          <div class="mds-row-control demo-inline">
+            <button class="mds-button" type="button" id="show-toast">Show toast</button>
+            <button class="mds-button" type="button" id="show-dialog">Open dialog</button>
+            <span class="mds-status mds-status--note" id="dialog-result" role="status"></span>
+          </div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Loading</h3></div>
+          <div class="mds-row-control"><div class="mds-loading demo-loading"><span class="mds-spinner"></span>Reading the local configuration…</div></div></div>
+      </div>
+    </section>
+
+    <!-- Code -->
+    <section class="mds-stack" data-page-panel="code" aria-labelledby="h-code" hidden>
+      <div class="mds-section-heading"><h2 id="h-code">Code</h2><p>A panel for a live file preview, and <code>.mds-pre</code> for logs.</p></div>
+      <aside class="mds-code" aria-label="Configuration preview">
+        <div class="mds-code-header"><div class="mds-code-title"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#code"/></svg><span>Configuration preview</span></div><button class="mds-icon-button" type="button" id="copy-code" aria-label="Copy YAML" title="Copy YAML"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#copy"/></svg></button></div>
+        <div class="mds-code-meta"><span>config.yaml</span><span class="mds-status" data-tone="warn"><i class="mds-dot"></i><span>Unsaved draft</span></span></div>
+        <pre class="mds-code-body" tabindex="0" aria-label="YAML"><span class="mds-code-line"><span class="mds-code-comment"># Local proxy entry point</span></span><span class="mds-code-line"><span class="mds-code-key">listen</span>: <span class="mds-code-value">127.0.0.1:17890</span></span><span class="mds-code-line"><span class="mds-code-key">dns</span>:</span><span class="mds-code-line">  <span class="mds-code-key">proxy</span>: <span class="mds-code-value">8.8.8.8</span></span><span class="mds-code-line">  <span class="mds-code-key">fake_ip</span>: <span class="mds-code-value">true</span></span><span class="mds-code-line"><span class="mds-code-key">rules</span>:</span><span class="mds-code-line">  <span class="mds-code-key">mode</span>: <span class="mds-code-value">split</span></span></pre>
+        <div class="mds-code-footer"><span>7 lines</span><span>YAML</span></div>
+      </aside>
+      <pre class="mds-pre">2026-11-10 09:41:07 INFO  service ready
+2026-11-10 09:41:08 INFO  exit node selected: relay-tokyo
+2026-11-10 09:41:12 WARN  exit unavailable, traffic held until it returns</pre>
+    </section>
+
+    <!-- Colour -->
+    <section class="mds-stack" data-page-panel="colour" aria-labelledby="h-colour" hidden>
+      <div class="mds-section-heading"><h2 id="h-colour">Colour</h2><p>Values read live from the current theme. Switch the theme in the toolbar to compare.</p></div>
+      <div class="demo-swatches" id="swatches"></div>
+    </section>
+
+    <!-- Type and icons -->
+    <section class="mds-stack" data-page-panel="type" aria-labelledby="h-type" hidden>
+      <div class="mds-section-heading"><h2 id="h-type">Type and icons</h2><p>The platform interface face, so panels feel native in WKWebView and WebView2.</p></div>
+      <div class="mds-group">
+        <div class="mds-row"><div class="mds-row-label"><h3>Title</h3><p><code>--mds-text-title</code> · 1.125rem</p></div><div class="mds-row-control"><p class="demo-type" style="font-size:var(--mds-text-title);font-weight:600">Change the Tailscale network?</p></div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Heading</h3><p><code>--mds-text-heading</code> · 1rem</p></div><div class="mds-row-control"><p class="demo-type" style="font-size:var(--mds-text-heading);font-weight:600">Connection settings</p></div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Body</h3><p><code>--mds-text-body</code> · 0.875rem</p></div><div class="mds-row-control"><p class="demo-type">Choose an exit you are authorised to use. 选择已获准使用的出口设备。</p></div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Note</h3><p><code>--mds-text-note</code> · 0.8125rem</p></div><div class="mds-row-control"><p class="demo-type" style="font-size:var(--mds-text-note);color:var(--mds-muted)">Applies to direct connections only.</p></div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Caption</h3><p><code>--mds-text-caption</code> · 0.75rem</p></div><div class="mds-row-control"><p class="demo-type" style="font-size:var(--mds-text-caption);color:var(--mds-muted)">Only this device can open this page</p></div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Mono</h3><p><code>--mds-mono</code> · code, addresses, files</p></div><div class="mds-row-control"><p class="demo-type mds-mono">tail12345.ts.net · 172.31.255.2:53</p></div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Icons</h3><p><code>icons/icons.svg</code> · 24px grid, 1.7 stroke</p></div><div class="mds-row-control demo-icons" id="icons"></div></div>
+      </div>
+    </section>
+
+    <footer class="mds-actionbar">
+      <span class="mds-status mds-status--note" id="save-state" role="status"><i class="mds-dot" data-tone="good"></i><span>All changes saved</span></span>
+      <div class="mds-actionbar-buttons">
+        <button class="mds-button mds-button--subtle" type="button" id="discard" disabled>Discard changes</button>
+        <button class="mds-button" type="button" id="validate"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#check"/></svg>Validate</button>
+        <button class="mds-button mds-button--primary" type="button" id="save" disabled>Save and apply</button>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<dialog class="mds-dialog" id="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-detail">
+  <form method="dialog">
+    <h2 id="dialog-title">Discard unsaved changes?</h2>
+    <p id="dialog-detail">The configuration is read again from disk and your draft is replaced.</p>
+    <div class="mds-dialog-actions"><button class="mds-button" value="cancel" autofocus>Keep editing</button><button class="mds-button mds-button--primary" value="discard">Discard and reload</button></div>
+  </form>
+</dialog>
+</body>
+</html>
