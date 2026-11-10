@@ -21,13 +21,13 @@
   <div class="mds-titlebar-content">
     <nav class="mds-crumbs" aria-label="Breadcrumb"><span>Components</span><span class="mds-crumb-sep" aria-hidden="true">/</span><span aria-current="page" id="crumb">Controls</span></nav>
     <div class="mds-titlebar-actions">
-      <span class="mds-status" data-tone="good" role="status"><i class="mds-dot" aria-hidden="true"></i><span>v0.3.0</span></span>
-      <button class="mds-pill" id="pill-demo" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span>Update 0.4.0</span></button>
+      <span class="mds-status" data-tone="good" role="status"><i class="mds-dot" aria-hidden="true"></i><span>v0.4.0</span></span>
+      <button class="mds-pill" id="pill-demo" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span>Update 0.5.0</span></button>
     </div>
     <div class="mds-window-controls" hidden>
-      <button data-window-action="minimize" aria-label="Minimise"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 6h10"/></svg></button>
-      <button data-window-action="zoom" aria-label="Maximise or restore"><svg viewBox="0 0 12 12" aria-hidden="true"><rect x="1.5" y="1.5" width="9" height="9"/></svg></button>
-      <button data-window-action="close" aria-label="Close window"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m1 1 10 10M1 11 11 1"/></svg></button>
+      <button data-window-action="minimize" aria-label="Minimise"><svg aria-hidden="true"><use href="../icons/icons.svg#minimize"/></svg></button>
+      <button data-window-action="zoom" aria-label="Maximise or restore"><svg aria-hidden="true"><use href="../icons/icons.svg#maximize"/></svg></button>
+      <button data-window-action="close" aria-label="Close window"><svg aria-hidden="true"><use href="../icons/icons.svg#x"/></svg></button>
     </div>
   </div>
 </header>
@@ -155,7 +155,7 @@ example.org</textarea></div></div>
       <div class="mds-section-heading"><h2 id="h-feedback">Feedback</h2><p>Each message names the problem and the way forward.</p></div>
       <div class="mds-notice" role="alert"><div><strong>The configuration on disk has changed</strong><p>Your draft is kept. Reload the latest configuration before saving so other changes are not overwritten.</p></div><button class="mds-button mds-button--small" type="button">Reload</button></div>
       <div class="mds-notice" data-tone="error" role="alert"><div><strong>The action did not finish</strong><p>The network service did not respond. Check that it is running, then try again.</p></div></div>
-      <div class="mds-notice" data-tone="accent" role="status"><div><strong>Version 0.4.0 is ready to install</strong><p>Installing ends the current connection and restarts the app.</p></div><button class="mds-button mds-button--small mds-button--primary" type="button">Install</button></div>
+      <div class="mds-notice" data-tone="accent" role="status"><div><strong>Version 0.5.0 is ready to install</strong><p>Installing ends the current connection and restarts the app.</p></div><button class="mds-button mds-button--small mds-button--primary" type="button">Install</button></div>
       <div class="mds-group">
         <div class="mds-row"><div class="mds-row-label"><h3>Status</h3><p><code>.mds-status</code> with <code>data-tone</code>.</p></div>
           <div class="mds-row-control demo-inline demo-centre">
@@ -166,7 +166,7 @@ example.org</textarea></div></div>
           </div></div>
         <div class="mds-row"><div class="mds-row-label"><h3>Pills</h3><p>One pending action in the titlebar.</p></div>
           <div class="mds-row-control demo-inline demo-centre">
-            <button class="mds-pill" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span>Update 0.4.0</span></button>
+            <button class="mds-pill" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span>Update 0.5.0</span></button>
             <button class="mds-pill" type="button" aria-busy="true" disabled><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#reload"/></svg><span>Downloading 42%</span></button>
             <button class="mds-pill" type="button" data-tone="error"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#alert"/></svg><span>Update failed</span></button>
           </div></div>
@@ -212,7 +212,7 @@ example.org</textarea></div></div>
         <div class="mds-row"><div class="mds-row-label"><h3>Note</h3><p><code>--mds-text-note</code> · 0.8125rem</p></div><div class="mds-row-control"><p class="demo-type" style="font-size:var(--mds-text-note);color:var(--mds-muted)">Applies to direct connections only.</p></div></div>
         <div class="mds-row"><div class="mds-row-label"><h3>Caption</h3><p><code>--mds-text-caption</code> · 0.75rem</p></div><div class="mds-row-control"><p class="demo-type" style="font-size:var(--mds-text-caption);color:var(--mds-muted)">Only this device can open this page</p></div></div>
         <div class="mds-row"><div class="mds-row-label"><h3>Mono</h3><p><code>--mds-mono</code> · code, addresses, files</p></div><div class="mds-row-control"><p class="demo-type mds-mono">tail12345.ts.net · 172.31.255.2:53</p></div></div>
-        <div class="mds-row"><div class="mds-row-label"><h3>Icons</h3><p><code>icons/icons.svg</code> · 24px grid, 1.7 stroke</p></div><div class="mds-row-control demo-icons" id="icons"></div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Icons</h3><p><code>icons/icons.svg</code> · Phosphor Regular · 256px grid</p></div><div class="mds-row-control demo-icons" id="icons"></div></div>
       </div>
     </section>
 

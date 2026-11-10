@@ -27,16 +27,16 @@ app's static assets and serve them from your own origin. Include `fonts/`
 beside `css/` so the registered font URLs resolve:
 
 ```sh
-git clone --depth 1 --branch v0.3.0 https://github.com/idy/magpie-design-system.git /tmp/mds
+git clone --depth 1 --branch v0.4.0 https://github.com/idy/magpie-design-system.git /tmp/mds
 cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 ```
 
 **Or load from a CDN** on public pages:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.3.0/css/magpie.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.0/css/magpie.css">
 <script type="module">
-  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.3.0/js/magpie.js';
+  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.0/js/magpie.js';
 </script>
 ```
 
@@ -44,7 +44,7 @@ cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 `./css` to the stylesheet):
 
 ```sh
-npm install github:idy/magpie-design-system#v0.3.0
+npm install github:idy/magpie-design-system#v0.4.0
 ```
 
 `css/magpie.css` imports everything. To pick layers, link them in this order:
@@ -56,7 +56,8 @@ npm install github:idy/magpie-design-system#v0.3.0
 | `css/components.css` | Buttons, form controls, switch, tabs, settings rows, card, notice, status, pill, spinner, toast, dialog, code panel | No |
 | `css/layout.css` | App shell: titlebar, brand, window controls, sidebar navigation, workspace, toolbar, action bar | Yes, if you only need components |
 
-Icons live in one sprite, `icons/icons.svg`. Reference it from the same origin:
+Phosphor Regular icons live in one sprite, `icons/icons.svg`. Reference it
+from the same origin:
 
 ```html
 <svg class="mds-icon" aria-hidden="true"><use href="/assets/mds/icons/icons.svg#reload"/></svg>
@@ -94,6 +95,22 @@ any element to theme only that subtree. `setTheme()` does this from script.
 Theme tokens hold literal values in each theme block rather than `var()`
 aliases. Custom properties resolve where they are declared, so aliases would
 not follow a nested `data-theme`.
+
+## Icons
+
+All interface glyphs use **[Phosphor Icons](https://phosphoricons.com/),
+Regular weight**, vendored from `@phosphor-icons/core` 2.1.1. The sprite
+contains 23 symbols on Phosphor's 256 × 256 grid. Paths inherit
+`currentColor` as filled geometry; do not add a CSS stroke.
+
+Existing public IDs such as `reload`, `device` and `layout` are preserved.
+The native-select caret, custom-dropdown check, loading spinner and window
+controls also use Phosphor geometry. The brand mark remains the product logo.
+All assets are self-hosted, with no runtime package or icon CDN required.
+
+See [icons/README.md](icons/README.md) for the upstream name mapping and
+[MIT copyright notice](icons/LICENSE). `icons/manifest.json` pins the exact
+release archive and its SHA-512 integrity value.
 
 ## Typography
 
@@ -299,7 +316,7 @@ toast('Configuration saved and applied');
 | `css/` | The library, in cascade order via `css/magpie.css` |
 | `js/magpie.js` | Behaviour helpers and public exports |
 | `js/select.js` | Custom dropdown implementation, re-exported by `magpie.js` |
-| `icons/icons.svg` | Icon sprite, 24px grid, `currentColor` strokes |
+| `icons/` | Phosphor Regular sprite, control SVGs, upstream manifest and MIT notice |
 | `fonts/` | Self-hosted Montserrat, Monda and Lato, with their OFL license notices |
 | `demo/` | Catalogue page; not part of the published package |
 | `scripts/check.mjs` | Consistency checks run by `npm test` and CI |
@@ -338,6 +355,10 @@ Thank you, yetone, for the careful, native-feeling interface that inspired it.
 Magpie is released under the MIT License. This repository does not include
 Magpie source code; it is an independent implementation, and the name
 acknowledges where the style comes from.
+
+Interface icons are from **[Phosphor Icons](https://phosphoricons.com/)**,
+Regular weight. Their original [MIT copyright notice](icons/LICENSE) is
+bundled with the SVG assets.
 
 ## License
 

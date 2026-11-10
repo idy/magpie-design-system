@@ -16,7 +16,7 @@
 /* ---- Utilities ------------------------------------------------------- */
 /* Components set display, so restate [hidden] for pages that skip base.css. */
 :is([class^="mds-"], [class*=" mds-"])[hidden] { display: none !important; }
-.mds-icon { width: 16px; height: 16px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.mds-icon { width: 16px; height: 16px; flex: 0 0 auto; fill: currentColor; stroke: none; }
 .mds-mono { font-family: var(--mds-mono); font-size: var(--mds-text-code); }
 .mds-visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .mds-tabular { font-variant-numeric: tabular-nums; }
@@ -73,8 +73,8 @@
 .mds-input[aria-invalid="true"], .mds-textarea[aria-invalid="true"], .mds-select[aria-invalid="true"] { border-color: var(--mds-error); }
 .mds-select {
   padding-right: 28px; appearance: none; cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 9px center;
+  background-image: url("../icons/caret-down.svg");
+  background-repeat: no-repeat; background-position: right 9px center; background-size: 14px 14px;
 }
 .mds-select option { background: var(--mds-surface); color: var(--mds-ink); }
 .mds-textarea { display: block; min-height: 80px; padding-block: 8px; line-height: 1.6; resize: vertical; }
@@ -104,9 +104,11 @@
   cursor: pointer; user-select: none; -webkit-user-select: none; overflow-wrap: anywhere;
 }
 .mds-select-option::before {
-  content: ""; position: absolute; top: 50%; left: 11px; width: 5px; height: 9px;
-  border-right: 1.7px solid var(--mds-accent-ink); border-bottom: 1.7px solid var(--mds-accent-ink);
-  opacity: 0; transform: translateY(-65%) rotate(45deg);
+  content: ""; position: absolute; top: 50%; left: 8px; width: 16px; height: 16px;
+  background: var(--mds-accent-ink);
+  -webkit-mask: url("../icons/check.svg") center / contain no-repeat;
+  mask: url("../icons/check.svg") center / contain no-repeat;
+  opacity: 0; transform: translateY(-50%);
 }
 .mds-select-option[aria-selected="true"] { font-weight: 700; }
 .mds-select-option[aria-selected="true"]::before { opacity: 1; }
@@ -220,7 +222,13 @@
 .mds-pill .mds-icon { width: 13px; height: 13px; }
 .mds-pill[aria-busy="true"] .mds-icon { animation: mds-spin 1s linear infinite; }
 
-.mds-spinner { display: inline-block; flex: 0 0 auto; width: 15px; height: 15px; border: 2px solid var(--mds-spinner-line); border-top-color: var(--mds-accent-ink); border-radius: 50%; animation: mds-spin .8s linear infinite; }
+.mds-spinner {
+  display: inline-block; flex: 0 0 auto; width: 15px; height: 15px;
+  background: var(--mds-accent-ink);
+  -webkit-mask: url("../icons/spinner.svg") center / contain no-repeat;
+  mask: url("../icons/spinner.svg") center / contain no-repeat;
+  animation: mds-spin .8s linear infinite;
+}
 .mds-loading { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 280px; color: var(--mds-muted); }
 
 .mds-toast {

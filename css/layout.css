@@ -47,7 +47,7 @@
 .mds-window-controls button { display: grid; place-items: center; width: 44px; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--mds-ink); }
 .mds-window-controls button:hover { background: var(--mds-raised); }
 .mds-window-controls button[data-window-action="close"]:hover { background: var(--mds-danger); color: #fff; }
-.mds-window-controls svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1; }
+.mds-window-controls svg { width: 12px; height: 12px; fill: currentColor; stroke: none; }
 .mds-brand:focus-visible, .mds-window-controls button:focus-visible { outline-offset: -4px; }
 
 /* ---- Shell and sidebar ---------------------------------------------- */
