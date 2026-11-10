@@ -211,7 +211,8 @@ face aligned with the switch track; the icon face is 28px wide with a 16px
 glyph. The transparent native target remains 32px square, or 44px for coarse
 pointers. `mds-icon-button--compact` uses the same 20px visible height for its
 hover/focus treatment. Backgrounds, borders and focus rings follow the slim
-face instead of painting the outer click target. The
+face instead of painting the outer click target. Compact faces use fully
+rounded capsule ends, matching the switch track. The
 `mds-pill-label` stays accessible when visually hidden, including live status
 updates. Keep an explicit `aria-label` or `aria-labelledby` on the button.
 Busy/error labels do not stretch compact targets. Use `aria-busy` for busy

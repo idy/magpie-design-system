@@ -59,7 +59,7 @@
 /* Compact toolbar chrome matches the 20px switch track. The native button
    keeps its larger transparent hit area, including the coarse-pointer target. */
 .mds-icon-button--compact { position: relative; isolation: isolate; }
-.mds-icon-button--compact::before { content: ""; position: absolute; z-index: -1; box-sizing: border-box; width: 28px; height: var(--mds-compact-control-height); left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: var(--mds-radius-sm); pointer-events: none; }
+.mds-icon-button--compact::before { content: ""; position: absolute; z-index: -1; box-sizing: border-box; width: 28px; height: var(--mds-compact-control-height); left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: var(--mds-radius-pill); pointer-events: none; }
 .mds-icon-button--compact:hover:not(:disabled) { background: transparent; }
 .mds-icon-button--compact:hover:not(:disabled)::before { background: var(--mds-icon-hover); }
 .mds-icon-button--compact:focus-visible { outline: none; }
@@ -260,7 +260,7 @@ button.mds-switch:disabled { cursor: not-allowed; }
 /* A slim 20px face aligns with the switch track inside a larger hit target.
    Label text stays in the accessibility tree, including live status changes. */
 .mds-pill--icon, .mds-pill--responsive { position: relative; isolation: isolate; border-color: transparent; background: transparent; }
-.mds-pill--icon::before, .mds-pill--responsive::before { content: ""; position: absolute; z-index: -1; box-sizing: border-box; height: var(--mds-compact-control-height); inset-inline: 0; top: 50%; transform: translateY(-50%); border: 1px solid var(--mds-pill-line); border-radius: var(--mds-radius-sm); background: var(--mds-pill-bg); pointer-events: none; }
+.mds-pill--icon::before, .mds-pill--responsive::before { content: ""; position: absolute; z-index: -1; box-sizing: border-box; height: var(--mds-compact-control-height); inset-inline: 0; top: 50%; transform: translateY(-50%); border: 1px solid var(--mds-pill-line); border-radius: var(--mds-radius-pill); background: var(--mds-pill-bg); pointer-events: none; }
 .mds-pill--icon:hover:not(:disabled), .mds-pill--responsive:hover:not(:disabled) { background: transparent; }
 .mds-pill--icon:hover:not(:disabled)::before, .mds-pill--responsive:hover:not(:disabled)::before { background: var(--mds-pill-hover); }
 .mds-pill--icon:focus-visible, .mds-pill--responsive:focus-visible { outline: none; }
