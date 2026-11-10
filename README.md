@@ -63,6 +63,12 @@ Icons live in one sprite, `icons/icons.svg`. Reference it from the same origin:
 
 ## Demo
 
+[Open the live component catalogue](https://idy.github.io/magpie-design-system/).
+It includes controls, settings, feedback, code panels, colour tokens and icons,
+with light, dark and system themes.
+
+To run it locally:
+
 ```sh
 npm run demo
 ```
@@ -70,6 +76,13 @@ npm run demo
 Then open <http://127.0.0.1:4173/demo/>. The demo is itself built with the
 shell and covers every component, its states, the live colour tokens and the
 icon set, in light and dark.
+
+GitHub Pages deploys the catalogue automatically from `main` through
+`.github/workflows/pages.yml`, after `npm test` passes. Only `index.html`,
+`demo/`, `css/`, `js/` and `icons/` enter the Pages artifact. The root URL
+redirects to `demo/` so the same relative asset paths work locally and under
+the GitHub project path. To redeploy without a commit, run the workflow
+manually from the repository's Actions tab.
 
 ## Theme
 
