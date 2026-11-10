@@ -1,6 +1,6 @@
 {
   "name": "@idy/magpie-design-system",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Buildless CSS tokens, components and an app shell for the idy.dev desktop panels, styled after Magpie.",
   "license": "MIT",
   "type": "module",
@@ -12,6 +12,7 @@
     "css",
     "js",
     "icons",
+    "fonts",
     "LICENSE",
     "README.md"
   ],

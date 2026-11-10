@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <title>Magpie Design System</title>
+  <link rel="preload" href="../fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/monda-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/lato-regular-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../css/magpie.css">
   <link rel="stylesheet" href="demo.css">
   <script type="module" src="demo.js"></script>
@@ -18,8 +21,8 @@
   <div class="mds-titlebar-content">
     <nav class="mds-crumbs" aria-label="Breadcrumb"><span>Components</span><span class="mds-crumb-sep" aria-hidden="true">/</span><span aria-current="page" id="crumb">Controls</span></nav>
     <div class="mds-titlebar-actions">
-      <span class="mds-status" data-tone="good" role="status"><i class="mds-dot" aria-hidden="true"></i><span>v0.2.0</span></span>
-      <button class="mds-pill" id="pill-demo" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span>Update 0.3.0</span></button>
+      <span class="mds-status" data-tone="good" role="status"><i class="mds-dot" aria-hidden="true"></i><span>v0.3.0</span></span>
+      <button class="mds-pill" id="pill-demo" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span>Update 0.4.0</span></button>
     </div>
     <div class="mds-window-controls" hidden>
       <button data-window-action="minimize" aria-label="Minimise"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 6h10"/></svg></button>
@@ -32,11 +35,15 @@
 <div class="mds-shell">
   <aside class="mds-sidebar">
     <nav class="mds-nav" aria-label="Sections" id="nav">
-      <p class="mds-nav-group">Components</p>
-      <button class="mds-nav-item" data-page="controls" aria-current="page"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#toggle"/></svg><span>Controls</span></button>
-      <button class="mds-nav-item" data-page="settings"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#layout"/></svg><span>Settings</span></button>
-      <button class="mds-nav-item" data-page="feedback"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#bell"/></svg><span>Feedback</span></button>
-      <button class="mds-nav-item" data-page="code"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#code"/></svg><span>Code</span></button>
+      <div class="mds-nav-branch">
+        <button class="mds-nav-item mds-nav-parent" type="button" aria-expanded="true" aria-controls="component-nav"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#layout"/></svg><span>Components</span></button>
+        <div class="mds-subnav" id="component-nav">
+          <button class="mds-nav-item" type="button" data-page="controls" aria-current="page">Controls</button>
+          <button class="mds-nav-item" type="button" data-page="settings">Settings</button>
+          <button class="mds-nav-item" type="button" data-page="feedback">Feedback</button>
+          <button class="mds-nav-item" type="button" data-page="code">Code</button>
+        </div>
+      </div>
       <p class="mds-nav-group">Foundations</p>
       <button class="mds-nav-item" data-page="colour"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#palette"/></svg><span>Colour</span></button>
       <button class="mds-nav-item" data-page="type"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#type"/></svg><span>Type and icons</span></button>
@@ -148,7 +155,7 @@ example.org</textarea></div></div>
       <div class="mds-section-heading"><h2 id="h-feedback">Feedback</h2><p>Each message names the problem and the way forward.</p></div>
       <div class="mds-notice" role="alert"><div><strong>The configuration on disk has changed</strong><p>Your draft is kept. Reload the latest configuration before saving so other changes are not overwritten.</p></div><button class="mds-button mds-button--small" type="button">Reload</button></div>
       <div class="mds-notice" data-tone="error" role="alert"><div><strong>The action did not finish</strong><p>The network service did not respond. Check that it is running, then try again.</p></div></div>
-      <div class="mds-notice" data-tone="accent" role="status"><div><strong>Version 0.3.0 is ready to install</strong><p>Installing ends the current connection and restarts the app.</p></div><button class="mds-button mds-button--small mds-button--primary" type="button">Install</button></div>
+      <div class="mds-notice" data-tone="accent" role="status"><div><strong>Version 0.4.0 is ready to install</strong><p>Installing ends the current connection and restarts the app.</p></div><button class="mds-button mds-button--small mds-button--primary" type="button">Install</button></div>
       <div class="mds-group">
         <div class="mds-row"><div class="mds-row-label"><h3>Status</h3><p><code>.mds-status</code> with <code>data-tone</code>.</p></div>
           <div class="mds-row-control demo-inline demo-centre">
@@ -159,7 +166,7 @@ example.org</textarea></div></div>
           </div></div>
         <div class="mds-row"><div class="mds-row-label"><h3>Pills</h3><p>One pending action in the titlebar.</p></div>
           <div class="mds-row-control demo-inline demo-centre">
-            <button class="mds-pill" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span>Update 0.3.0</span></button>
+            <button class="mds-pill" type="button"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#up"/></svg><span>Update 0.4.0</span></button>
             <button class="mds-pill" type="button" aria-busy="true" disabled><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#reload"/></svg><span>Downloading 42%</span></button>
             <button class="mds-pill" type="button" data-tone="error"><svg class="mds-icon" aria-hidden="true"><use href="../icons/icons.svg#alert"/></svg><span>Update failed</span></button>
           </div></div>
@@ -196,10 +203,11 @@ example.org</textarea></div></div>
 
     <!-- Type and icons -->
     <section class="mds-stack" data-page-panel="type" aria-labelledby="h-type" hidden>
-      <div class="mds-section-heading"><h2 id="h-type">Type and icons</h2><p>The platform interface face, so panels feel native in WKWebView and WebView2.</p></div>
+      <div class="mds-section-heading"><h2 id="h-type">Type and icons</h2><p>Montserrat for large titles and actions, regular Monda for headings, and Lato for body copy and other interface text.</p></div>
       <div class="mds-group">
-        <div class="mds-row"><div class="mds-row-label"><h3>Title</h3><p><code>--mds-text-title</code> · 1.125rem</p></div><div class="mds-row-control"><p class="demo-type" style="font-size:var(--mds-text-title);font-weight:600">Change the Tailscale network?</p></div></div>
-        <div class="mds-row"><div class="mds-row-label"><h3>Heading</h3><p><code>--mds-text-heading</code> · 1rem</p></div><div class="mds-row-control"><p class="demo-type" style="font-size:var(--mds-text-heading);font-weight:600">Connection settings</p></div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Large title</h3><p>Montserrat · 600 · 1.25rem</p></div><div class="mds-row-control"><p class="demo-type mds-title">Change the Tailscale network?</p></div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Heading</h3><p>Monda · 400 · 1rem</p></div><div class="mds-row-control"><p class="demo-type mds-heading">Connection settings</p></div></div>
+        <div class="mds-row"><div class="mds-row-label"><h3>Action</h3><p>Montserrat · 500</p></div><div class="mds-row-control"><button class="mds-button mds-button--primary" type="button">Save and apply</button></div></div>
         <div class="mds-row"><div class="mds-row-label"><h3>Body</h3><p><code>--mds-text-body</code> · 0.875rem</p></div><div class="mds-row-control"><p class="demo-type">Choose an exit you are authorised to use. 选择已获准使用的出口设备。</p></div></div>
         <div class="mds-row"><div class="mds-row-label"><h3>Note</h3><p><code>--mds-text-note</code> · 0.8125rem</p></div><div class="mds-row-control"><p class="demo-type" style="font-size:var(--mds-text-note);color:var(--mds-muted)">Applies to direct connections only.</p></div></div>
         <div class="mds-row"><div class="mds-row-label"><h3>Caption</h3><p><code>--mds-text-caption</code> · 0.75rem</p></div><div class="mds-row-control"><p class="demo-type" style="font-size:var(--mds-text-caption);color:var(--mds-muted)">Only this device can open this page</p></div></div>

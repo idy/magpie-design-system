@@ -33,12 +33,12 @@
 [data-window-chrome="macos"] .mds-brand { padding-left: 88px; } /* Clear the traffic lights. */
 .mds-brand-mark { display: grid; place-items: center; }
 .mds-brand-mark svg { display: block; width: 22px; height: 22px; }
-.mds-brand-name { font-size: 0.9375rem; font-weight: 650; letter-spacing: -0.013em; white-space: nowrap; }
+.mds-brand-name { min-width: 0; overflow: hidden; font-family: var(--mds-font-display); font-size: 0.9375rem; font-weight: 650; letter-spacing: -0.013em; text-overflow: ellipsis; white-space: nowrap; }
 /* Fixed-height native chrome centres its text; window controls fill the row. */
 .mds-titlebar-content { display: flex; align-items: center; gap: 16px; min-width: 0; padding-inline: var(--mds-gutter); border-bottom: 1px solid var(--mds-line); }
 .mds-titlebar-actions { display: flex; align-items: center; gap: 10px; min-width: 0; margin-left: auto; }
 .mds-crumbs { display: flex; align-items: baseline; gap: 8px; min-width: 0; font-size: var(--mds-text-body); white-space: nowrap; }
-.mds-crumbs > * { color: var(--mds-muted); font-size: inherit; font-weight: 450; }
+.mds-crumbs > * { color: var(--mds-muted); font-size: inherit; font-weight: 400; }
 .mds-crumbs > [aria-current] { overflow: hidden; color: var(--mds-ink); font-weight: 600; text-overflow: ellipsis; }
 .mds-crumb-sep { color: var(--mds-faint); }
 
@@ -66,7 +66,7 @@
 }
 .mds-nav-item .mds-icon { color: var(--mds-muted); }
 .mds-nav-item:hover:not(:disabled) { background: var(--mds-hover); }
-.mds-nav-item[aria-current] { background: var(--mds-selected); color: var(--mds-ink-strong); font-weight: 500; }
+.mds-nav-item[aria-current] { background: var(--mds-selected); color: var(--mds-ink-strong); font-weight: 600; }
 .mds-nav-item[aria-current] .mds-icon { color: var(--mds-ink-strong); }
 .mds-nav-item:disabled { cursor: not-allowed; opacity: .45; }
 .mds-sidebar-footer { display: grid; gap: 12px; margin-top: auto; padding: 16px 10px 0; border-top: 1px solid var(--mds-line); color: var(--mds-muted); font-size: var(--mds-text-caption); }
@@ -99,6 +99,21 @@
 }
 .mds-actionbar-buttons { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; margin-inline-start: auto; }
 
+/* ---- Typography and nested navigation ------------------------------- */
+.mds-titlebar, .mds-titlebar .mds-status { font-family: var(--mds-font-action); }
+.mds-shell { font-family: var(--mds-font); }
+.mds-nav-item { font-family: var(--mds-font-action); font-weight: 500; }
+.mds-nav-group { font-family: var(--mds-font-heading); font-weight: 400; }
+
+/* A parent keeps its own active surface; only its selected leaf is current. */
+.mds-nav-branch { display: grid; gap: 10px; }
+.mds-nav-parent { border: 1px solid transparent; font-family: var(--mds-font-action); font-weight: 500; }
+.mds-nav-parent[data-active] { border-color: var(--mds-line); background: var(--mds-surface); color: var(--mds-ink); box-shadow: 0 1px 2px var(--mds-toast-shadow); }
+.mds-nav-parent[data-active] .mds-icon { color: var(--mds-ink); }
+.mds-nav-parent[data-active]:hover:not(:disabled) { background: var(--mds-surface); }
+.mds-subnav { display: flex; flex-direction: column; gap: 2px; margin: 0 0 2px 14px; padding-inline-start: 10px; border-inline-start: 1px solid var(--mds-line); }
+.mds-subnav > .mds-nav-item { min-height: 34px; padding: 7px 12px; }
+
 /* ---- Narrow windows -------------------------------------------------- */
 @media (max-width: 860px) {
   .mds-titlebar-content { gap: 12px; padding-inline: 16px; }
@@ -112,10 +127,12 @@
   .mds-crumbs { display: none; }
   .mds-shell { display: block; }
   .mds-sidebar { position: static; height: auto; padding: 0 12px; border-right: 0; border-bottom: 1px solid var(--mds-line); }
-  .mds-nav { flex-direction: row; gap: 4px; margin-top: 8px; padding-bottom: 8px; overflow-x: auto; scrollbar-width: none; }
+  .mds-nav { flex-direction: row; align-items: flex-start; gap: 4px; margin-top: 8px; padding-bottom: 8px; overflow-x: auto; scrollbar-width: none; }
+  .mds-nav-branch { flex: 0 0 auto; gap: 4px; }
+  .mds-subnav { flex-direction: row; gap: 4px; margin: 0; padding-inline-start: 8px; }
   .mds-nav-group, .mds-sidebar-footer { display: none; }
   .mds-nav-item { flex: 0 0 auto; white-space: nowrap; }
   .mds-actionbar { flex-direction: column; align-items: stretch; }
 }
 @media (max-width: 380px) { .mds-brand-name { display: none; } }
-@media (pointer: coarse) { .mds-nav-item { min-height: 44px; } }
+@media (pointer: coarse) { .mds-nav-item, .mds-subnav > .mds-nav-item { min-height: 44px; } }

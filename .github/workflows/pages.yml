@@ -28,7 +28,7 @@ jobs:
         run: |
           mkdir _site
           cp index.html _site/
-          cp -R demo css js icons _site/
+          cp -R demo css js icons fonts _site/
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:

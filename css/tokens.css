@@ -10,15 +10,21 @@
  * a nested [data-theme]. scripts/check.mjs keeps the two dark blocks identical.
  */
 
+/* Fonts are registered with the tokens; the browser fetches only used faces. */
+@import url("fonts.css");
+
 /* Theme-independent scales. */
 :root {
-  --mds-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  --mds-font: Lato, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+  --mds-font-display: Montserrat, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+  --mds-font-action: Montserrat, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+  --mds-font-heading: Monda, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
   --mds-mono: "SF Mono", "SFMono-Regular", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
 
   /* Type: body copy, section headings, supporting notes, captions and code. */
   --mds-text-body: 0.875rem;
   --mds-text-heading: 1rem;
-  --mds-text-title: 1.125rem;
+  --mds-text-title: 1.25rem;
   --mds-text-note: 0.8125rem;
   --mds-text-caption: 0.75rem;
   --mds-text-code: 0.8125rem;
@@ -33,10 +39,10 @@
 
   /* Radii: inline code, controls, segmented/notice/toast, groups and cards, dialogs. */
   --mds-radius-xs: 4px;
-  --mds-radius-sm: 6px;
-  --mds-radius-md: 8px;
-  --mds-radius-lg: 10px;
-  --mds-radius-xl: 12px;
+  --mds-radius-sm: 8px;
+  --mds-radius-md: 10px;
+  --mds-radius-lg: 12px;
+  --mds-radius-xl: 14px;
   --mds-radius-pill: 999px;
 
   /* Motion. */

@@ -5,6 +5,14 @@
  * colour intent from data-tone="neutral|accent|good|warn|error".
  */
 
+/* ---- Typography roles ------------------------------------------------ */
+/* These explicit families also work when a host page omits base.css. */
+:where(.mds-card, .mds-group, .mds-section-heading, .mds-note, .mds-notice, .mds-status, .mds-check, .mds-loading, .mds-toast, .mds-dialog, .mds-code) { font-family: var(--mds-font); }
+.mds-title { font: 600 var(--mds-text-title)/1.4 var(--mds-font-display); text-wrap: balance; }
+.mds-heading { font: 400 var(--mds-text-heading)/1.5 var(--mds-font-heading); text-wrap: balance; }
+.mds-button, .mds-link-button, .mds-icon-button, .mds-pill { font-family: var(--mds-font-action); font-weight: 500; }
+.mds-input:not(.mds-mono), .mds-select:not(.mds-mono), .mds-textarea:not(.mds-mono) { font-family: var(--mds-font); }
+
 /* ---- Utilities ------------------------------------------------------- */
 /* Components set display, so restate [hidden] for pages that skip base.css. */
 :is([class^="mds-"], [class*=" mds-"])[hidden] { display: none !important; }
@@ -100,11 +108,11 @@
   border-right: 1.7px solid var(--mds-accent-ink); border-bottom: 1.7px solid var(--mds-accent-ink);
   opacity: 0; transform: translateY(-65%) rotate(45deg);
 }
-.mds-select-option[aria-selected="true"] { font-weight: 500; }
+.mds-select-option[aria-selected="true"] { font-weight: 700; }
 .mds-select-option[aria-selected="true"]::before { opacity: 1; }
 .mds-select-option[data-active] { background: var(--mds-selected); color: var(--mds-ink-strong); }
 .mds-select-option[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
-.mds-select-group { padding: 8px 10px 4px; color: var(--mds-muted); font-size: var(--mds-text-caption); }
+.mds-select-group { padding: 8px 10px 4px; color: var(--mds-muted); font-family: var(--mds-font-heading); font-size: var(--mds-text-caption); font-weight: 400; }
 @media (pointer: coarse) { .mds-select-option { min-height: 44px; } }
 
 /* An input with a trailing unit: <div class="mds-input-unit"><input class="mds-input"><span>ms</span></div> */
@@ -134,10 +142,10 @@
   display: flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 32px; padding: 6px 12px; border: 0; border-radius: var(--mds-radius-sm);
   background: transparent; color: var(--mds-muted);
-  font-size: var(--mds-text-note); font-weight: 500; line-height: 1.4; white-space: nowrap;
+  font-family: var(--mds-font-action); font-size: var(--mds-text-note); font-weight: 500; line-height: 1.4; white-space: nowrap;
 }
 .mds-tabs > [role="tab"]:hover:not(:disabled) { color: var(--mds-ink); }
-.mds-tabs > [role="tab"][aria-selected="true"] { background: var(--mds-selected); color: var(--mds-ink-strong); }
+.mds-tabs > [role="tab"][aria-selected="true"] { background: var(--mds-selected); color: var(--mds-ink-strong); font-weight: 600; }
 .mds-tabs > [role="tab"]:disabled { cursor: not-allowed; opacity: .45; }
 .mds-tabs .mds-icon { width: 14px; height: 14px; }
 .mds-tabs--fill { display: flex; width: 100%; }
@@ -145,15 +153,17 @@
 
 /* ---- Settings groups ------------------------------------------------- */
 .mds-section-heading { display: grid; gap: 4px; min-width: 0; margin: 0 2px 16px; }
-.mds-section-heading h2 { font-size: var(--mds-text-heading); font-weight: 600; line-height: 1.4; text-wrap: balance; }
+.mds-section-heading h2 { font-family: var(--mds-font-heading); font-size: var(--mds-text-heading); font-weight: 400; line-height: 1.5; text-wrap: balance; }
 .mds-section-heading p { max-width: 65ch; color: var(--mds-muted); font-size: var(--mds-text-note); line-height: 1.55; overflow-wrap: anywhere; }
-.mds-note { margin: 12px 2px 4px; color: var(--mds-muted); font-size: var(--mds-text-note); line-height: 1.6; overflow-wrap: anywhere; }
+.mds-note { max-width: 75ch; margin: 12px 2px 4px; color: var(--mds-muted); font-size: var(--mds-text-note); line-height: 1.6; overflow-wrap: anywhere; }
 
 .mds-group { container: mds-group / inline-size; overflow: hidden; border: 1px solid var(--mds-line); border-radius: var(--mds-radius-lg); background: var(--mds-surface); }
 .mds-row { display: grid; grid-template-columns: minmax(150px, 190px) minmax(0, 1fr); gap: var(--mds-gap); align-items: start; padding: 12px 16px; border-top: 1px solid var(--mds-line); }
 .mds-row:first-child { border-top: 0; }
 .mds-row-label { min-width: 0; padding-top: 6px; }
-.mds-row-label :is(label, h3) { display: block; color: var(--mds-ink); font-size: var(--mds-text-body); font-weight: 500; line-height: 1.5; }
+.mds-row-label :is(label, h3) { display: block; color: var(--mds-ink); font-size: var(--mds-text-body); font-weight: 400; line-height: 1.5; }
+.mds-row-label label { font-family: var(--mds-font); }
+.mds-row-label h3 { font-family: var(--mds-font-heading); }
 .mds-row-label p { max-width: 60ch; margin-top: 4px; color: var(--mds-muted); font-size: var(--mds-text-note); line-height: 1.55; overflow-wrap: anywhere; }
 .mds-row-control { min-width: 0; }
 .mds-row--toggle { align-items: center; }
@@ -170,7 +180,7 @@
 }
 
 .mds-card { min-width: 0; padding: 16px; border: 1px solid var(--mds-line); border-radius: var(--mds-radius-lg); background: var(--mds-surface); }
-.mds-card-title { display: block; font-size: var(--mds-text-body); font-weight: 600; }
+.mds-card-title { display: block; font-family: var(--mds-font-heading); font-size: var(--mds-text-body); font-weight: 400; }
 .mds-card-hint { max-width: 65ch; margin-top: 4px; color: var(--mds-muted); font-size: var(--mds-text-note); line-height: 1.55; overflow-wrap: anywhere; }
 .mds-card-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--mds-line); }
 
@@ -183,7 +193,7 @@
   padding: 12px 16px; border: 1px solid var(--mds-notice-line); border-radius: var(--mds-radius-md);
   background: var(--mds-notice-bg); color: var(--mds-notice-ink); font-size: var(--mds-text-note); line-height: 1.6;
 }
-.mds-notice strong { font-weight: 600; }
+.mds-notice strong { font-family: var(--mds-font-heading); font-weight: 400; }
 .mds-notice p { max-width: 75ch; margin-top: 4px; color: var(--mds-notice-detail); overflow-wrap: anywhere; }
 .mds-notice[data-tone="error"] { --mds-notice-ink: var(--mds-error); --mds-notice-detail: var(--mds-error-detail); --mds-notice-line: var(--mds-error-line); --mds-notice-bg: var(--mds-error-bg); }
 .mds-notice[data-tone="accent"] { --mds-notice-ink: var(--mds-accent-ink); --mds-notice-detail: var(--mds-ink-secondary); --mds-notice-line: var(--mds-info-line); --mds-notice-bg: var(--mds-info-bg); }
@@ -232,9 +242,9 @@
   box-shadow: 0 20px 60px var(--mds-dialog-shadow);
 }
 .mds-dialog--wide { width: min(920px, 90vw); max-height: 85vh; }
-.mds-dialog h2 { font-size: var(--mds-text-title); font-weight: 600; line-height: 1.4; text-wrap: balance; }
+.mds-dialog h2 { font-family: var(--mds-font-display); font-size: var(--mds-text-title); font-weight: 600; line-height: 1.4; text-wrap: balance; }
 .mds-dialog p { margin-top: 8px; color: var(--mds-muted); font-size: var(--mds-text-body); line-height: 1.6; }
-.mds-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+.mds-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 20px; }
 /* ::backdrop does not inherit custom properties in Chromium 120 (WebView2), so values stay literal. */
 .mds-dialog::backdrop { background: #0005; backdrop-filter: blur(2px); }
 [data-theme="dark"] .mds-dialog::backdrop, .mds-dialog[data-theme="dark"]::backdrop { background: #0009; }
@@ -246,7 +256,7 @@
 /* Code panel with header, file bar, numbered body and footer. */
 .mds-code { min-width: 0; overflow: hidden; border: 1px solid var(--mds-line); border-radius: var(--mds-radius-lg); background: var(--mds-code); color: var(--mds-ink-soft); }
 .mds-code-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 10px 10px 14px; }
-.mds-code-title { display: flex; align-items: center; gap: 8px; color: var(--mds-ink-secondary); font-size: var(--mds-text-note); font-weight: 500; }
+.mds-code-title { display: flex; align-items: center; gap: 8px; color: var(--mds-ink-secondary); font-family: var(--mds-font-heading); font-size: var(--mds-text-note); font-weight: 400; }
 .mds-code-title .mds-icon { width: 14px; height: 14px; color: var(--mds-muted); }
 .mds-code-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 14px; border-block: 1px solid var(--mds-line); font-size: var(--mds-text-caption); }
 .mds-code-meta > :first-child { color: var(--mds-muted); font-family: var(--mds-mono); }

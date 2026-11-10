@@ -1,7 +1,7 @@
 /* Demo-only layout. Nothing here is part of the design system. */
 .demo-toolbar { align-items: flex-end; padding-top: 28px; }
 .demo-intro { margin-bottom: 0; }
-.demo-intro h2 { font-size: var(--mds-text-title); }
+.demo-intro h2 { font-family: var(--mds-font-display); font-size: var(--mds-text-title); font-weight: 600; line-height: 1.4; }
 .demo-intro a { color: var(--mds-accent-ink); text-underline-offset: 3px; }
 .mds-workspace > .mds-stack, .mds-workspace > .demo-toolbar { width: min(100% - 2 * var(--mds-gutter), 880px); }
 .demo-inline { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
@@ -14,7 +14,7 @@
 
 .demo-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px 20px; }
 .demo-swatch-set { display: grid; gap: 8px; align-content: start; }
-.demo-swatch-set h3 { margin: 0 2px; color: var(--mds-muted); font-size: var(--mds-text-caption); font-weight: 500; }
+.demo-swatch-set h3 { margin: 0 2px; color: var(--mds-muted); font-family: var(--mds-font-heading); font-size: var(--mds-text-caption); font-weight: 400; }
 .demo-swatch-list { overflow: hidden; border: 1px solid var(--mds-line); border-radius: var(--mds-radius-lg); background: var(--mds-surface); }
 .demo-swatch { display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: center; gap: 10px; padding: 8px 12px; border-top: 1px solid var(--mds-line); }
 .demo-swatch:first-child { border-top: 0; }

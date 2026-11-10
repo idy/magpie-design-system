@@ -22,20 +22,21 @@ The visual language follows [Magpie](https://github.com/yetone/magpie) by
 Pin a tag. Every release is tagged `vX.Y.Z`.
 
 **Vendor the files** (recommended for apps with a strict Content Security
-Policy, such as loopback-only panels). Copy `css/`, `js/` and `icons/` into the
-app's static assets and serve them from your own origin:
+Policy, such as loopback-only panels). Copy `css/`, `js/`, `icons/` and `fonts/` into the
+app's static assets and serve them from your own origin. Include `fonts/`
+beside `css/` so the registered font URLs resolve:
 
 ```sh
-git clone --depth 1 --branch v0.2.0 https://github.com/idy/magpie-design-system.git /tmp/mds
-cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons path/to/assets/mds/
+git clone --depth 1 --branch v0.3.0 https://github.com/idy/magpie-design-system.git /tmp/mds
+cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 ```
 
 **Or load from a CDN** on public pages:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.2.0/css/magpie.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.3.0/css/magpie.css">
 <script type="module">
-  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.2.0/js/magpie.js';
+  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.3.0/js/magpie.js';
 </script>
 ```
 
@@ -43,7 +44,7 @@ cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons path/to/assets/mds/
 `./css` to the stylesheet):
 
 ```sh
-npm install github:idy/magpie-design-system#v0.2.0
+npm install github:idy/magpie-design-system#v0.3.0
 ```
 
 `css/magpie.css` imports everything. To pick layers, link them in this order:
@@ -79,7 +80,7 @@ icon set, in light and dark.
 
 GitHub Pages deploys the catalogue automatically from `main` through
 `.github/workflows/pages.yml`, after `npm test` passes. Only `index.html`,
-`demo/`, `css/`, `js/` and `icons/` enter the Pages artifact. The root URL
+`demo/`, `css/`, `js/`, `icons/` and `fonts/` enter the Pages artifact. The root URL
 redirects to `demo/` so the same relative asset paths work locally and under
 the GitHub project path. To redeploy without a commit, run the workflow
 manually from the repository's Actions tab.
@@ -94,6 +95,30 @@ Theme tokens hold literal values in each theme block rather than `var()`
 aliases. Custom properties resolve where they are declared, so aliases would
 not follow a nested `data-theme`.
 
+## Typography
+
+The shared idy.dev fonts are bundled locally. `tokens.css` imports their
+`@font-face` declarations from `css/fonts.css`; the browser fetches only
+faces that the page uses, with `font-display: swap`.
+
+| Role | Family | Weight | Token |
+| --- | --- | --- | --- |
+| Large titles | Montserrat | 600 | `--mds-font-display` |
+| Actions, sidebar navigation, tabs and titlebar text | Montserrat | 500 for actions; 600 for the active navigation item | `--mds-font-action` |
+| Ordinary content headings, card titles and grouped-menu titles | Monda | 400, never bold | `--mds-font-heading` |
+| Body copy, field labels, dropdown values and other metadata | Lato | 400; 700 for emphasis and selected options | `--mds-font` |
+| Code, addresses and filenames | Platform monospace | As needed | `--mds-mono` |
+
+Use `.mds-title` for a large 1.25rem title and `.mds-heading` for a regular
+1rem heading outside the supplied components. Body text remains 0.875rem,
+with 0.8125rem notes and 0.75rem captions for compact panels. Descriptions
+stay within 60–75ch where appropriate.
+
+These assets cover Latin text; Chinese uses the system fallback in each
+font stack. See [fonts/README.md](fonts/README.md) for the asset inventory and
+SIL Open Font License notices. Keep `fonts/` beside `css/` when vendoring
+the library so its relative URLs resolve.
+
 ## Tokens
 
 All tokens are custom properties on `:root`, prefixed `--mds-`.
@@ -107,9 +132,9 @@ All tokens are custom properties on `:root`, prefixed `--mds-`.
 | Status | `good`, `good-ink`, `warn`, `warn-detail`, `warn-line`, `warn-bg`, `error`, `error-detail`, `error-line`, `error-bg`, `error-hover`, `info-line`, `info-bg`, `info-hover`, `danger` | Tones for status, notices and pills; `danger` is the window close hover |
 | Overlays | `hover`, `selected`, `wash`, `subtle-hover`, `icon-hover`, `button-hover`, `field-hover` | Translucent hover and selection layers that work on any surface |
 | Details | `inline-code`, `scroll-thumb`, `scroll-thumb-hover`, `spinner-line`, `switch-off`, `switch-knob`, `code-key`, `code-value`, `actionbar`, `toast-shadow`, `dialog-shadow` | Component specifics |
-| Type | `font`, `mono`, `text-title` (1.125rem), `text-heading` (1rem), `text-body` (0.875rem), `text-note` (0.8125rem), `text-caption` (0.75rem), `text-code` (0.8125rem) | Platform UI face and mono face, and the type scale |
+| Type | `font` (Lato), `font-display` and `font-action` (Montserrat), `font-heading` (Monda), `mono`, `text-title` (1.25rem), `text-heading` (1rem), `text-body` (0.875rem), `text-note` (0.8125rem), `text-caption` (0.75rem), `text-code` (0.8125rem) | Semantic font families and the compact type scale |
 | Layout | `gutter`, `gap`, `section-gap`, `control-height`, `titlebar-height`, `sidebar-width` | Shell geometry; `gutter` and `sidebar-width` shrink on narrow windows |
-| Radius | `radius-xs` (4px), `radius-sm` (6px), `radius-md` (8px), `radius-lg` (10px), `radius-xl` (12px), `radius-pill` | Inline code, controls, segmented tabs and notices, groups and cards, dialogs, pills and switches |
+| Radius | `radius-xs` (4px), `radius-sm` (8px), `radius-md` (10px), `radius-lg` (12px), `radius-xl` (14px), `radius-pill` | Inline code, controls, segmented tabs and notices, groups and cards, dialogs, pills and switches |
 | Motion | `duration-fast` (120ms), `duration` (150ms), `ease` | Control transitions and the toast entrance |
 
 ## Components
@@ -218,6 +243,32 @@ Below 640px the sidebar becomes a horizontal tab strip and the action bar
 stacks. `data-window-chrome="macos"` widens the sidebar and clears the traffic
 lights; `"windows"` shows the page-drawn window controls.
 
+### Nested sidebar navigation
+
+Use a parent disclosure button and an indented `.mds-subnav` for a second
+level. The parent has its own active surface and the submenu has a guide
+line; only the selected leaf receives `aria-current="page"`.
+
+```html
+<nav class="mds-nav" id="settings-nav" aria-label="Settings">
+  <div class="mds-nav-branch">
+    <button class="mds-nav-item mds-nav-parent" type="button"
+            aria-expanded="true" aria-controls="settings-pages">Settings</button>
+    <div class="mds-subnav" id="settings-pages">
+      <button class="mds-nav-item" type="button">General</button>
+      <button class="mds-nav-item" type="button" aria-current="page">Network and sharing</button>
+    </div>
+  </div>
+</nav>
+```
+
+Call `initNav()` on the outer nav. Parent clicks expand or collapse the
+submenu without calling `onSelect`; leaf selections call `onSelect` and
+update the ancestor's `data-active` state. Programmatic selections reveal
+the active path. A vetoed selection keeps the previous page and path.
+On narrow screens the nested group becomes two horizontal rows with the
+parent above its children, preserving the disclosure state and touch targets.
+
 ## JavaScript
 
 `js/magpie.js` is a dependency-free ES module. Importing it runs nothing.
@@ -229,7 +280,7 @@ lights; `"windows"` shows the page-drawn window controls.
 | `openDialog(dialog, { fallback? })` | `showModal()` and resolve with the dialog's `returnValue`; Escape resolves with `fallback` (`'cancel'`) |
 | `initSelect(select)` | Custom dropdown with keyboard navigation and typeahead; preserves the original select's form data and events; returns `trigger`, `open`, `close`, `refresh` and `destroy` |
 | `initTabs(tablist, { onSelect? })` | Roving tabindex, Arrow/Home/End keys, `aria-selected` and panel `hidden` via `aria-controls`; `onSelect` may return `false` to veto |
-| `initNav(nav, { onSelect? })` | Move `aria-current="page"` between `.mds-nav-item` buttons; `onSelect` may return `false` to veto |
+| `initNav(nav, { onSelect? })` | Select navigation leaves, maintain the active parent path and toggle `.mds-nav-parent` submenus; `onSelect` may return `false` to veto |
 | `detectWindowHost(macHandler?)` | Find the native bridge: WKWebView message handler `macHandler`, or WebView2 `chrome.webview`; `null` in a browser |
 | `initWindowChrome(titlebar, bridge)` | Frameless-window titlebar: posts `drag` after a real 4px drag, `zoom` on double-click, and each `data-window-action`; sets `data-window-chrome` |
 
@@ -249,6 +300,7 @@ toast('Configuration saved and applied');
 | `js/magpie.js` | Behaviour helpers and public exports |
 | `js/select.js` | Custom dropdown implementation, re-exported by `magpie.js` |
 | `icons/icons.svg` | Icon sprite, 24px grid, `currentColor` strokes |
+| `fonts/` | Self-hosted Montserrat, Monda and Lato, with their OFL license notices |
 | `demo/` | Catalogue page; not part of the published package |
 | `scripts/check.mjs` | Consistency checks run by `npm test` and CI |
 
@@ -269,6 +321,10 @@ options, clipped groups, viewport placement, labels, teardown, disabled
 fieldsets and the fallback portal's nested theme. These browser checks run
 separately from the Node consistency checks in `npm test`.
 
+Open <http://127.0.0.1:4173/tests/nav.html> for the nested navigation suite,
+which checks parent disclosure, active paths, selection vetoes and disabled
+or foreign items.
+
 Keep the two dark-theme blocks in `css/tokens.css` identical; `npm test`
 fails otherwise. Bump `version` in `package.json` together with the pinned
 examples in this README, then tag `vX.Y.Z`.
@@ -285,4 +341,5 @@ acknowledges where the style comes from.
 
 ## License
 
-[MIT](LICENSE) © idy
+[MIT](LICENSE) © idy for the library code. Bundled typefaces retain the
+[SIL Open Font License 1.1 notices in `fonts/`](fonts/README.md).

@@ -103,25 +103,50 @@ export function initTabs(tablist, { onSelect } = {}) {
 }
 
 /**
- * Marks one `.mds-nav-item` as the current page (aria-current) and calls
+ * Marks one navigable `.mds-nav-item` as the current page and calls
  * `onSelect(item)`; a false result keeps the previous item.
+ * `.mds-nav-parent` buttons disclose their aria-controls subnav without
+ * navigating. Active ancestors receive data-active; selecting a descendant
+ * expands its path. Only the current leaf receives aria-current="page".
  */
 export function initNav(nav, { onSelect } = {}) {
-  const items = () => [...nav.querySelectorAll('.mds-nav-item')];
+  const items = () => [...nav.querySelectorAll('.mds-nav-item:not(.mds-nav-parent)')];
+  const parents = () => [...nav.querySelectorAll('.mds-nav-parent')];
+  const panelFor = (parent) => {
+    const panel = nav.ownerDocument.getElementById(parent.getAttribute('aria-controls'));
+    return panel && nav.contains(panel) ? panel : null;
+  };
+  function syncParents(reveal = false) {
+    for (const parent of parents()) {
+      const panel = panelFor(parent);
+      if (!panel) continue;
+      const current = panel.querySelector('.mds-nav-item[aria-current="page"]');
+      parent.toggleAttribute('data-active', Boolean(current));
+      if (current && reveal) parent.setAttribute('aria-expanded', 'true');
+      panel.hidden = parent.getAttribute('aria-expanded') !== 'true';
+    }
+  }
   async function select(item) {
-    if (!item || item.getAttribute('aria-current')) return true;
+    if (!item || item.disabled || !items().includes(item)) return false;
+    if (item.getAttribute('aria-current')) { syncParents(true); return true; }
     if (onSelect && (await onSelect(item)) === false) return false;
     for (const other of items()) {
       if (other === item) other.setAttribute('aria-current', 'page');
       else other.removeAttribute('aria-current');
     }
+    syncParents(true);
     return true;
   }
   nav.addEventListener('click', (event) => {
     const item = event.target.closest('.mds-nav-item');
     if (!item || !nav.contains(item) || item.disabled) return;
-    if (item.tagName === 'BUTTON') select(item);
+    if (item.classList.contains('mds-nav-parent')) {
+      if (!panelFor(item)) return;
+      item.setAttribute('aria-expanded', String(item.getAttribute('aria-expanded') !== 'true'));
+      syncParents();
+    } else if (item.tagName === 'BUTTON') select(item);
   });
+  syncParents(true);
   return { select };
 }
 
