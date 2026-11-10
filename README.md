@@ -27,16 +27,16 @@ app's static assets and serve them from your own origin. Include `fonts/`
 beside `css/` so the registered font URLs resolve:
 
 ```sh
-git clone --depth 1 --branch v0.4.1 https://github.com/idy/magpie-design-system.git /tmp/mds
+git clone --depth 1 --branch v0.4.2 https://github.com/idy/magpie-design-system.git /tmp/mds
 cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 ```
 
 **Or load from a CDN** on public pages:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.1/css/magpie.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.2/css/magpie.css">
 <script type="module">
-  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.1/js/magpie.js';
+  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.2/js/magpie.js';
 </script>
 ```
 
@@ -44,7 +44,7 @@ cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 `./css` to the stylesheet):
 
 ```sh
-npm install github:idy/magpie-design-system#v0.4.1
+npm install github:idy/magpie-design-system#v0.4.2
 ```
 
 `css/magpie.css` imports everything. To pick layers, link them in this order:
