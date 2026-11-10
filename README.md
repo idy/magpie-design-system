@@ -229,7 +229,8 @@ shared controls are recognized automatically. Dense rows trim horizontal
 hit padding to 38px for switches, 32px for compact update actions and 24px for
 refresh, while retaining 44px height on coarse pointers. This keeps the 8px
 visual gaps free of overlapping click targets. Text-select end padding is
-trimmed without moving the visible caret relative to its value. Standalone
+calculated from the shared gap and caret geometry, so the text layout edge
+to caret also follows the 8px rhythm. Standalone
 controls retain their original sizing. Spacing is preserved when updates are
 hidden or change state; do not add product-specific compensation.
 

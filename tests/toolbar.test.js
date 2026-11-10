@@ -143,7 +143,8 @@ test('Every visible interval stays equal across status, mode and update states',
   const probe = new DOMParser().parseFromString(caretSource, 'image/svg+xml').documentElement;
   const node = document.importNode(probe, true); node.setAttribute('width', '14'); node.setAttribute('height', '14');
   node.style.cssText = 'position:fixed;left:0;top:0;opacity:0;pointer-events:none'; fixture.append(node);
-  const caretInset = node.getBoundingClientRect().right - node.querySelector('path').getBoundingClientRect().right;
+  const caretInk = node.querySelector('path').getBoundingClientRect();
+  const caretInset = node.getBoundingClientRect().right - caretInk.right;
   try {
     for (let selected = 0; selected < source.options.length; selected++) {
       source.selectedIndex = selected; control.refresh();
@@ -153,7 +154,12 @@ test('Every visible interval stays equal across status, mode and update states',
         const trigger = control.trigger, rect = trigger.getBoundingClientRect(), style = getComputedStyle(trigger);
         const text = document.createRange(); text.selectNodeContents(trigger);
         const placement = Number(style.backgroundPositionX.match(/-\s*([\d.]+)px/)?.[1] ?? 9);
-        const mode = { left: text.getBoundingClientRect().left, right: rect.right - parseFloat(style.borderRightWidth) - placement - caretInset };
+        const textBounds = text.getBoundingClientRect();
+        const mode = { left: textBounds.left, right: rect.right - parseFloat(style.borderRightWidth) - placement - caretInset };
+        if (trigger.scrollWidth <= trigger.clientWidth + 1) {
+          const internalGap = mode.right - caretInk.width - textBounds.right;
+          assert(Math.abs(internalGap - 8) < 0.25, `${source.value}/${state}: text-to-caret gap ${internalGap}`);
+        }
         const anchors = [status.getBoundingClientRect(), mode, row.querySelector('.mds-switch-track').getBoundingClientRect()];
         if (!update.hidden) anchors.push(faceBounds(update));
         anchors.push(refresh.querySelector('use').getBoundingClientRect());

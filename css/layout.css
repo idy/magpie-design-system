@@ -41,7 +41,8 @@
    instead of overlapping adjacent actions; coarse-pointer height stays 44px. */
 .mds-titlebar-actions.mds-titlebar-actions--balanced { gap: var(--mds-titlebar-visual-gap); padding-inline-end: 0; }
 .mds-titlebar-actions--balanced > * { --mds-action-inset-start: 0px; --mds-action-inset-end: 0px; margin-inline-start: calc(0px - var(--mds-action-inset-start)); margin-inline-end: calc(0px - var(--mds-action-inset-end)); }
-.mds-titlebar-actions--balanced .mds-select--text { padding-inline-end: 20px; background-position: right 1px center; }
+/* End padding = shared gap + 9.625px caret ink + 4.1875px end inset - 1px border. */
+.mds-titlebar-actions--balanced .mds-select--text { padding-inline-end: calc(var(--mds-titlebar-visual-gap) + 12.8125px); background-position: right 1px center; }
 .mds-titlebar-actions--balanced > :is(.mds-action-slot--select, .mds-select-control--text, .mds-select--text) { --mds-action-inset-start: 3px; --mds-action-inset-end: 4.1875px; min-width: 0; }
 /* Text caret: 1px border + 1px placement + 40/256 of its 14px Phosphor viewport. */
 .mds-titlebar-actions--balanced > :is(.mds-switch, .mds-action-slot--switch) { --mds-action-inset-start: 2px; --mds-action-inset-end: 2px; }
