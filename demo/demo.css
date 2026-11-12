@@ -1,7 +1,7 @@
 /* Demo-only layout. Nothing here is part of the design system. */
 .demo-toolbar { align-items: flex-end; padding-top: 28px; }
 .demo-intro { margin-bottom: 0; }
-.demo-intro h2 { font-family: var(--mds-font-display); font-size: var(--mds-text-title); font-weight: 600; line-height: 1.4; }
+.demo-intro h2 { font-family: var(--mds-font-display); font-size: var(--mds-text-title); font-weight: 300; line-height: 1.4; }
 .demo-intro a { color: var(--mds-accent-ink); text-underline-offset: 3px; }
 .mds-workspace > .mds-stack, .mds-workspace > .demo-toolbar { width: min(100% - 2 * var(--mds-gutter), 880px); }
 .demo-inline { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
