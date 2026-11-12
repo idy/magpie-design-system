@@ -27,16 +27,16 @@ app's static assets and serve them from your own origin. Include `fonts/`
 beside `css/` so the registered font URLs resolve:
 
 ```sh
-git clone --depth 1 --branch v0.4.3 https://github.com/idy/magpie-design-system.git /tmp/mds
+git clone --depth 1 --branch v0.4.4 https://github.com/idy/magpie-design-system.git /tmp/mds
 cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 ```
 
 **Or load from a CDN** on public pages:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.3/css/magpie.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.4/css/magpie.css">
 <script type="module">
-  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.3/js/magpie.js';
+  import { toast } from 'https://cdn.jsdelivr.net/gh/idy/magpie-design-system@v0.4.4/js/magpie.js';
 </script>
 ```
 
@@ -44,7 +44,7 @@ cp -R /tmp/mds/css /tmp/mds/js /tmp/mds/icons /tmp/mds/fonts path/to/assets/mds/
 `./css` to the stylesheet):
 
 ```sh
-npm install github:idy/magpie-design-system#v0.4.3
+npm install github:idy/magpie-design-system#v0.4.4
 ```
 
 `css/magpie.css` imports everything. To pick layers, link them in this order:
@@ -122,16 +122,19 @@ faces that the page uses, with `font-display: swap`.
 
 | Role | Family | Weight | Token |
 | --- | --- | --- | --- |
-| Large titles | Montserrat | 600 | `--mds-font-display` |
-| Actions, sidebar navigation, tabs and titlebar text | Montserrat | 500 for actions; 600 for the active navigation item | `--mds-font-action` |
-| Ordinary content headings, card titles and grouped-menu titles | Monda | 400, never bold | `--mds-font-heading` |
-| Body copy, field labels, dropdown values and other metadata | Lato | 400; 700 for emphasis and selected options | `--mds-font` |
+| Large titles | Outfit | 300, light only | `--mds-font-display` |
+| Button actions | Outfit | 300, light only | `--mds-font-action` |
+| Ordinary content headings, card titles and grouped-menu titles | Source Sans 3 | 400 | `--mds-font-heading` |
+| Body copy, field labels, dropdowns, navigation, tabs and titlebar text | Source Sans 3 | 400; 700 only for explicit body emphasis | `--mds-font` |
 | Code, addresses and filenames | Platform monospace | As needed | `--mds-mono` |
 
-Use `.mds-title` for a large 1.25rem title and `.mds-heading` for a regular
-1rem heading outside the supplied components. Body text remains 0.875rem,
-with 0.8125rem notes and 0.75rem captions for compact panels. Descriptions
-stay within 60–75ch where appropriate.
+Use `.mds-title` for a large 1.125rem (18px) title and `.mds-heading` for a
+regular 0.9375rem (15px) heading outside the supplied components. Body text
+is 0.8125rem (13px), with 0.75rem (12px) notes and 0.6875rem (11px) captions
+for compact panels. Descriptions stay within 60–75ch where appropriate.
+Navigation, tabs, breadcrumbs and selected dropdown options remain regular;
+selected backgrounds, text colour and checkmarks convey their state.
+Touch-oriented form controls retain 16px text to avoid focus zoom.
 
 These assets cover Latin text; Chinese uses the system fallback in each
 font stack. See [fonts/README.md](fonts/README.md) for the asset inventory and
@@ -151,7 +154,7 @@ All tokens are custom properties on `:root`, prefixed `--mds-`.
 | Status | `good`, `good-ink`, `warn`, `warn-detail`, `warn-line`, `warn-bg`, `error`, `error-detail`, `error-line`, `error-bg`, `error-hover`, `info-line`, `info-bg`, `info-hover`, `danger` | Tones for status, notices and pills; `danger` is the window close hover |
 | Overlays | `hover`, `selected`, `wash`, `subtle-hover`, `icon-hover`, `button-hover`, `field-hover` | Translucent hover and selection layers that work on any surface |
 | Details | `inline-code`, `scroll-thumb`, `scroll-thumb-hover`, `spinner-line`, `switch-off`, `switch-knob`, `code-key`, `code-value`, `actionbar`, `toast-shadow`, `dialog-shadow` | Component specifics |
-| Type | `font` (Lato), `font-display` and `font-action` (Montserrat), `font-heading` (Monda), `mono`, `text-title` (1.25rem), `text-heading` (1rem), `text-body` (0.875rem), `text-note` (0.8125rem), `text-caption` (0.75rem), `text-code` (0.8125rem) | Semantic font families and the compact type scale |
+| Type | `font` and `font-heading` (Source Sans 3), `font-display` and `font-action` (Outfit), `mono`, `text-title` (1.125rem), `text-heading` (0.9375rem), `text-body` (0.8125rem), `text-note` (0.75rem), `text-caption` (0.6875rem), `text-code` (0.75rem) | Semantic font families and the compact type scale |
 | Layout | `gutter`, `gap`, `section-gap`, `control-height`, `compact-control-height`, `titlebar-height`, `titlebar-visual-gap`, `sidebar-width` | Shell geometry; compact action faces and switch tracks share a 20px height; `gutter` and `sidebar-width` shrink on narrow windows |
 | Radius | `radius-xs` (4px), `radius-sm` (8px), `radius-md` (10px), `radius-lg` (12px), `radius-xl` (14px), `radius-pill` | Inline code, controls, segmented tabs and notices, groups and cards, dialogs, pills and switches |
 | Motion | `duration-fast` (120ms), `duration` (150ms), `ease` | Control transitions and the toast entrance |
@@ -421,7 +424,7 @@ toast('Configuration saved and applied');
 | `js/magpie.js` | Behaviour helpers and public exports |
 | `js/select.js` | Custom dropdown implementation, re-exported by `magpie.js` |
 | `icons/` | Phosphor Regular sprite, control SVGs, upstream manifest and MIT notice |
-| `fonts/` | Self-hosted Montserrat, Monda and Lato, with their OFL license notices |
+| `fonts/` | Self-hosted Outfit and Source Sans 3, with their OFL license notices |
 | `demo/` | Catalogue page; not part of the published package |
 | `scripts/check.mjs` | Consistency checks run by `npm test` and CI |
 

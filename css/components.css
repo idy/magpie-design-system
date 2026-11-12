@@ -8,9 +8,9 @@
 /* ---- Typography roles ------------------------------------------------ */
 /* These explicit families also work when a host page omits base.css. */
 :where(.mds-card, .mds-group, .mds-section-heading, .mds-note, .mds-notice, .mds-status, .mds-check, .mds-loading, .mds-toast, .mds-dialog, .mds-code) { font-family: var(--mds-font); }
-.mds-title { font: 600 var(--mds-text-title)/1.4 var(--mds-font-display); text-wrap: balance; }
+.mds-title { font: 300 var(--mds-text-title)/1.4 var(--mds-font-display); text-wrap: balance; }
 .mds-heading { font: 400 var(--mds-text-heading)/1.5 var(--mds-font-heading); text-wrap: balance; }
-.mds-button, .mds-link-button, .mds-icon-button, .mds-pill { font-family: var(--mds-font-action); font-weight: 500; }
+.mds-button, .mds-link-button, .mds-icon-button, .mds-pill { font-family: var(--mds-font-action); font-weight: 300; }
 .mds-input:not(.mds-mono), .mds-select:not(.mds-mono), .mds-textarea:not(.mds-mono) { font-family: var(--mds-font); }
 
 /* ---- Utilities ------------------------------------------------------- */
@@ -34,7 +34,7 @@
   min-height: var(--mds-control-height); padding: 6px 12px;
   border: 1px solid var(--mds-line-strong); border-radius: var(--mds-radius-sm);
   background: var(--mds-raised); color: var(--mds-ink);
-  font-size: var(--mds-text-note); font-weight: 500; line-height: 1.5; white-space: nowrap;
+  font-size: var(--mds-text-note); font-weight: 300; line-height: 1.5; white-space: nowrap;
   transition: background-color var(--mds-duration-fast), border-color var(--mds-duration-fast), color var(--mds-duration-fast);
 }
 .mds-button:hover:not(:disabled) { background: var(--mds-button-hover); }
@@ -125,7 +125,7 @@
   mask: url("../icons/check.svg") center / contain no-repeat;
   opacity: 0; transform: translateY(-50%);
 }
-.mds-select-option[aria-selected="true"] { font-weight: 700; }
+.mds-select-option[aria-selected="true"] { font-weight: 400; }
 .mds-select-option[aria-selected="true"]::before { opacity: 1; }
 .mds-select-option[data-active] { background: var(--mds-selected); color: var(--mds-ink-strong); }
 .mds-select-option[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
@@ -168,10 +168,10 @@ button.mds-switch:disabled { cursor: not-allowed; }
   display: flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 32px; padding: 6px 12px; border: 0; border-radius: var(--mds-radius-sm);
   background: transparent; color: var(--mds-muted);
-  font-family: var(--mds-font-action); font-size: var(--mds-text-note); font-weight: 500; line-height: 1.4; white-space: nowrap;
+  font-family: var(--mds-font); font-size: var(--mds-text-note); font-weight: 400; line-height: 1.4; white-space: nowrap;
 }
 .mds-tabs > [role="tab"]:hover:not(:disabled) { color: var(--mds-ink); }
-.mds-tabs > [role="tab"][aria-selected="true"] { background: var(--mds-selected); color: var(--mds-ink-strong); font-weight: 600; }
+.mds-tabs > [role="tab"][aria-selected="true"] { background: var(--mds-selected); color: var(--mds-ink-strong); font-weight: 400; }
 .mds-tabs > [role="tab"]:disabled { cursor: not-allowed; opacity: .45; }
 .mds-tabs .mds-icon { width: 14px; height: 14px; }
 .mds-tabs--fill { display: flex; width: 100%; }
@@ -250,7 +250,7 @@ button.mds-switch:disabled { cursor: not-allowed; }
   min-height: 28px; padding: 3px 10px 3px 8px;
   border: 1px solid var(--mds-pill-line); border-radius: var(--mds-radius-pill);
   background: var(--mds-pill-bg); color: var(--mds-pill-ink);
-  font-size: var(--mds-text-caption); font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap;
+  font-size: var(--mds-text-caption); font-weight: 300; font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .mds-pill:hover:not(:disabled) { background: var(--mds-pill-hover); }
 .mds-pill:disabled { cursor: default; }
@@ -304,7 +304,7 @@ button.mds-switch:disabled { cursor: not-allowed; }
   box-shadow: 0 20px 60px var(--mds-dialog-shadow);
 }
 .mds-dialog--wide { width: min(920px, 90vw); max-height: 85vh; }
-.mds-dialog h2 { font-family: var(--mds-font-display); font-size: var(--mds-text-title); font-weight: 600; line-height: 1.4; text-wrap: balance; }
+.mds-dialog h2 { font-family: var(--mds-font-display); font-size: var(--mds-text-title); font-weight: 300; line-height: 1.4; text-wrap: balance; }
 .mds-dialog p { margin-top: 8px; color: var(--mds-muted); font-size: var(--mds-text-body); line-height: 1.6; }
 .mds-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 20px; }
 /* ::backdrop does not inherit custom properties in Chromium 120 (WebView2), so values stay literal. */
