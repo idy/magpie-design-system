@@ -75,13 +75,19 @@ To run it locally:
 npm run demo
 ```
 
-Then open <http://127.0.0.1:4173/demo/>. The demo is itself built with the
-shell and covers every component, its states, the live colour tokens and the
-icon set, in light and dark.
+Then open <http://127.0.0.1:4173/demo/>. The catalogue's website frame uses the
+complete idy.dev Site SDK 0.2.0 distribution vendored in `shared/sdk/`, with
+self-hosted Archivo, a blue masthead and ruled white/deep-navy sheets. Keep the
+complete distribution, fonts and licenses together when updating it. The
+`.magpie-specimen` below that frame still uses the published Magpie shell and
+covers every component, its states, the live colour tokens and the icon set in
+light and dark. Website-only rules in `demo/site.css` isolate the frame from
+those component demonstrations; `css/`, `js/`, Magpie tokens and API examples
+retain their product design.
 
 GitHub Pages deploys the catalogue automatically from `main` through
 `.github/workflows/pages.yml`, after `npm test` passes. Only `index.html`,
-`demo/`, `css/`, `js/`, `icons/`, `fonts/` and `CNAME` enter the Pages artifact.
+`demo/`, `shared/`, `css/`, `js/`, `icons/`, `fonts/` and `CNAME` enter the Pages artifact.
 `CNAME` records `magpie-design-system.idy.dev`; the repository's Pages settings
 must also bind that hostname, with a DNS CNAME pointing to `idy.github.io`.
 The root URL redirects to `demo/` so the same relative asset paths work locally

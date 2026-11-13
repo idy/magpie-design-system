@@ -5,13 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <title>Magpie Design System</title>
+  <meta name="theme-color" content="#0b5cad" data-idy-theme-color-light="#0b5cad" data-idy-theme-color-dark="#0b3d73">
+  <script src="../shared/sdk/idy-site.min.js"></script>
+  <link rel="stylesheet" href="../shared/sdk/idy-site.css">
   <link rel="preload" href="../fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../css/magpie.css">
   <link rel="stylesheet" href="demo.css">
+  <link rel="stylesheet" href="site.css">
   <script type="module" src="demo.js"></script>
 </head>
-<body>
+<body class="idy-site" lang="en">
+<a class="idy-skip-link" href="#catalogue">Skip to component catalogue</a>
+<header class="idy-header compact-header">
+  <div class="idy-header-inner">
+    <a class="idy-home" href="../">Magpie</a>
+    <nav class="idy-nav" aria-label="Website navigation"><a href="#catalogue">Catalogue</a><a href="https://github.com/idy/magpie-design-system#use-it">Docs</a><a href="https://github.com/idy/magpie-design-system">GitHub</a><a href="https://idy.dev/">idy.dev</a></nav>
+    <details class="idy-mobile"><summary aria-label="Website navigation"><i class="ph ph-list" aria-hidden="true"></i></summary><nav class="idy-mobile-panel" aria-label="Website navigation"><a href="#catalogue">Catalogue</a><a href="https://github.com/idy/magpie-design-system#use-it">Docs</a><a href="https://github.com/idy/magpie-design-system">GitHub</a><a href="https://idy.dev/">idy.dev</a></nav></details>
+  </div>
+</header>
+<section class="catalogue-intro idy-container" aria-labelledby="site-title">
+  <h1 id="site-title">Magpie Design System</h1>
+  <p>Desktop-panel components and tokens extracted from the TailSplit configuration window, in a visual language that follows <a href="https://github.com/yetone/magpie">Magpie</a>.</p>
+</section>
+<div class="magpie-specimen" id="catalogue">
 <header class="mds-titlebar" id="titlebar">
   <a class="mds-brand" href="./" aria-label="Magpie Design System home">
     <span class="mds-brand-mark"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="5" style="fill:var(--mds-ink-strong)"/><path d="M1 21 21 1v15a5 5 0 0 1-5 5H1Z" style="fill:var(--mds-accent)"/><circle cx="7.5" cy="7.5" r="2" style="fill:var(--mds-canvas)"/></svg></span>
@@ -249,5 +266,7 @@ example.org</textarea></div></div>
     <div class="mds-dialog-actions"><button class="mds-button" value="cancel" autofocus>Keep editing</button><button class="mds-button mds-button--primary" value="discard">Discard and reload</button></div>
   </form>
 </dialog>
+</div>
+<footer class="idy-footer"><div class="idy-footer-inner"><div><a class="idy-home" href="https://idy.dev/">idy.dev</a><p>Independent tools. Open source.</p></div><nav aria-label="Project links"><a href="https://idy.dev/">All projects</a><a href="https://github.com/idy/magpie-design-system">GitHub</a><a href="https://github.com/idy/magpie-design-system/blob/main/LICENSE">MIT</a></nav></div></footer>
 </body>
 </html>
