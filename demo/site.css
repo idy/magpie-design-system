@@ -1,4 +1,5 @@
 /* Website frame. The specimen below keeps the published Magpie tokens and components. */
+:root { scroll-padding-top: 0; }
 .catalogue-intro { padding-block: 36px 28px; }
 .catalogue-intro h1 { margin: 0; color: var(--idy-ink); font: 700 32px/1.25 var(--idy-font); letter-spacing: -.01em; }
 .catalogue-intro p { max-width: 70ch; margin: 16px 0 0; color: var(--idy-body); font: 15px/1.6 var(--idy-font); }
@@ -16,6 +17,11 @@
 .magpie-specimen :where(h1, h2, h3, h4, h5, h6) { color: inherit; letter-spacing: normal; }
 .magpie-specimen a { color: inherit; }
 .magpie-specimen .demo-intro a { color: var(--mds-accent-ink); }
+.magpie-specimen .mds-brand:hover { text-decoration: none; }
+/* Restore the library's heading metrics when SDK locale defaults select Chinese. */
+:root:lang(zh) .magpie-specimen :is(h1, h2, h3) { line-height: 1.5; letter-spacing: normal; }
+:root:lang(zh) .magpie-specimen h1,
+:root:lang(zh) .magpie-specimen :is(.demo-intro, .mds-dialog) h2 { line-height: 1.4; }
 .magpie-specimen :focus-visible { outline: 2px solid var(--mds-accent-ink); outline-offset: 2px; }
 .magpie-specimen ::selection { color: var(--mds-ink); background: var(--mds-selection); }
 .magpie-specimen :is(input, textarea) { caret-color: var(--mds-accent-ink); }
