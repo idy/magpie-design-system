@@ -1,0 +1,26 @@
+/* Website frame. The specimen below keeps the published Magpie tokens and components. */
+.catalogue-intro { padding-block: 36px 28px; }
+.catalogue-intro h1 { margin: 0; color: var(--idy-ink); font: 700 32px/1.25 var(--idy-font); letter-spacing: -.01em; }
+.catalogue-intro p { max-width: 70ch; margin: 16px 0 0; color: var(--idy-body); font: 15px/1.6 var(--idy-font); }
+.catalogue-intro a { color: var(--idy-accent); }
+.magpie-specimen {
+  border-block: 1px solid var(--idy-line);
+  background: var(--mds-canvas);
+  color: var(--mds-ink);
+  font: 400 var(--mds-text-body)/1.5 var(--mds-font);
+  overflow-wrap: normal;
+  caret-color: var(--mds-accent-ink);
+  scrollbar-color: var(--mds-scroll-thumb) var(--mds-canvas);
+}
+/* SDK document defaults must not change the components being demonstrated. */
+.magpie-specimen :where(h1, h2, h3, h4, h5, h6) { color: inherit; letter-spacing: normal; }
+.magpie-specimen a { color: inherit; }
+.magpie-specimen .demo-intro a { color: var(--mds-accent-ink); }
+.magpie-specimen :focus-visible { outline: 2px solid var(--mds-accent-ink); outline-offset: 2px; }
+.magpie-specimen ::selection { color: var(--mds-ink); background: var(--mds-selection); }
+.magpie-specimen :is(input, textarea) { caret-color: var(--mds-accent-ink); }
+.magpie-specimen .mds-brand:focus-visible, .magpie-specimen .mds-window-controls button:focus-visible { outline-offset: -4px; }
+@media (max-width: 760px) {
+  .catalogue-intro { padding-block: 28px 24px; }
+  .catalogue-intro h1 { font-size: 28px; line-height: 1.22; }
+}

@@ -1,17 +1,21 @@
-import { setTheme, toast, openDialog, initSelect, initTabs, initNav, detectWindowHost, initWindowChrome } from '../js/magpie.js';
+import { toast, openDialog, initSelect, initTabs, initNav, detectWindowHost, initWindowChrome } from '../js/magpie.js';
 
 const $ = (selector) => document.querySelector(selector);
 
 initWindowChrome($('#titlebar'), detectWindowHost());
 
-// Theme.
+// Share the website preference while retaining the catalogue's existing choice.
 const themeKey = 'mds-demo-theme';
-$('#theme').value = localStorage.getItem(themeKey) || 'system';
-setTheme($('#theme').value);
+let themePreference = 'system';
+try {
+  themePreference = localStorage.getItem('idy-theme') || localStorage.getItem(themeKey) || 'system';
+} catch { /* Theme controls remain usable when storage is unavailable. */ }
+$('#theme').value = ['light', 'dark'].includes(themePreference) ? themePreference : 'system';
+window.IdySite.setTheme($('#theme').value);
 for (const select of document.querySelectorAll('select.mds-select')) initSelect(select);
 $('#theme').addEventListener('change', (event) => {
-  setTheme(event.target.value);
-  localStorage.setItem(themeKey, event.target.value);
+  window.IdySite.setTheme(event.target.value);
+  try { localStorage.setItem(themeKey, event.target.value); } catch { /* Visit-only preference. */ }
   paintSwatches();
 });
 
